@@ -14,7 +14,7 @@ const Post: NextPage = ({ data }: any) => {
       <div className={styles.container}>
         <div>
           <picture>
-            <source srcSet={data.id_imagen} />
+            <source srcSet={data?.id_imagen} />
             <img
               src={data?.id_imagen}
               alt="Perfil"
