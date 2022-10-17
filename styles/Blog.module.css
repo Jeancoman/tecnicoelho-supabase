@@ -1,0 +1,7 @@
+.blog-page{
+    min-height: 100%;
+    margin-top: 20px;
+    margin-bottom: 100px;
+    display: grid;
+    place-items: center;
+}

@@ -1,0 +1,157 @@
+.product-view {
+    height: 320px;
+    width: 500px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+}
+
+.image {
+    display: grid;
+    place-items: center;
+    padding: 10px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.image img {
+    border-radius: 5px;
+}
+
+.product {
+    margin-top: 50px;
+    padding-bottom: 50px;
+}
+
+.product-info {
+    margin-top: 10px;
+    width: 385px;
+    font-family: "Open Sans";
+}
+
+.product-info h3 {
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.price {
+    font-weight: 700;
+    font-size: 22px;
+    color: rgb(0, 52, 74)
+}
+
+.price span {
+    color: var(--main-color)
+}
+
+.brand {
+    margin-bottom: 20px;
+}
+
+.button {
+    margin-top: 30px;
+    padding: 10px 20px;
+    font-weight: 600;
+    font-family: "Open Sans";
+    background-color: var(--main-color);
+    color: white;
+    appearance: none;
+    border: 0;
+    border-radius: 3px;
+    cursor: pointer
+}
+
+.stock {
+    margin-top: 10px;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 500px 385px;
+    gap: 50px;
+}
+
+.inferior-container {
+    margin-top: 80px;
+    font-family: "Open Sans";
+}
+
+.inferior-container hr {
+    background-color: rgb(200, 200, 200);
+    height: 1px;
+    border: 0;
+    margin-top: -10px;
+    z-index: 1;
+}
+
+.des-com {
+    display: flex;
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.des-com div {
+    padding: 0px 20px 10px;
+    cursor: pointer;
+}
+
+.descom-container p {
+    white-space: pre-wrap;
+    max-width: 800px;
+}
+
+.active {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    position: relative;
+    overflow: hidden;
+    color: var(--main-color)
+  }
+
+  .active:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--main-color);
+    height: 3px;
+    -webkit-transition-property: left, right;
+    transition-property: left, right;
+    -webkit-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+  }
+
+.descom-container {
+    margin-top: 20px;
+    max-width: 800px;
+}
+
+.box {
+    height: max-content;
+    width: max-content;
+    cursor: pointer;
+}
+
+.box img {
+    height: 50px;
+    width: 50px;
+    border-radius: 5px;
+}
+
+.box picture {
+    object-fit: cover;
+}
+
+.boxes {
+    display: flex;
+    gap: 20px;
+}

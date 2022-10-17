@@ -1,0 +1,44 @@
+.container {
+    font-family: "Open Sans";
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    flex-direction: column;
+    gap: 20px;
+    width: 400px;
+    height: 200px;
+  }
+  .container img {
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .container div:first-of-type picture {
+    object-fit: contain;
+    width: 400px;
+    height: 200px;
+    display: grid;
+    place-items: center;
+  }
+
+  .container img {
+    width: 200px;
+    width: 300px;
+  }
+  
+  .titulo {
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--main-color);
+      cursor: pointer;
+  }
+  
+  .titulo:hover {
+      color: #1182d5
+  }
+  
+  .fecha {
+      font-weight: 700;
+      font-size: 18px;
+      color: rgb(100, 100, 100)
+  }

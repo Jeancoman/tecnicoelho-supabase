@@ -1,0 +1,59 @@
+.container {
+  height: 380px;
+  width: 260px;
+  place-self: center;
+  box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.15);
+  -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.15);
+  -moz-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.15);
+  border-radius: 5px;
+  font-family: "Open Sans";
+  cursor: pointer;
+  background-color: white;
+}
+
+.container:hover {
+    box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.3);
+}
+
+.container .price {
+  color: var(--main-color);
+  font-weight: 600;
+}
+
+.information {
+  padding: 10px 15px;
+}
+
+.container .title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.image {
+  width: 260px;
+  height: 240px;
+  object-fit: contain;
+}
+
+.image picture {
+  width: 260px;
+  height: 240px;
+  display: grid;
+  place-items: center;
+}
+
+.image img {
+  width: 260px;
+  height: 240px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border: 1px solid none;
+}
+
+.container hr {
+  background-color: rgb(220, 220, 220);
+  height: 1px;
+  border: 0;
+}

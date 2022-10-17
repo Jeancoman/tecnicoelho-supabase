@@ -1,0 +1,50 @@
+.main {
+  height: 550px;
+  display: grid;
+  place-items: center;
+  margin: 50px 0px;
+}
+
+.sing-in-form form {
+  display: flex;
+  flex-direction: column;
+  font-family: "Open Sans";
+  gap: 20px;
+  padding: 30px 20px;
+}
+
+.sing-in-form {
+  width: 440px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.3);
+  display: grid;
+  place-items: center;
+}
+
+.sing-in-form input {
+  padding: 8px;
+  border-radius: 5px;
+  border: 2px solid rgb(220, 220, 220);
+  outline-color: var(--main-color);
+  width: 360px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.sing-in-form button {
+  background-color: var(--main-color);
+  padding: 10px 5px;
+  border-radius: 5px;
+  color: white;
+  font-weight: 600;
+  border: 0;
+  cursor: pointer;
+  width: 360px;
+}
+
+.sing-in-form button:hover {
+    background-color: #1077c2;
+}
