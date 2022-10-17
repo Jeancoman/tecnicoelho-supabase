@@ -1,7 +1,7 @@
 import sendgrid from "@sendgrid/mail";
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-sendgrid.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY!);
+sendgrid.setApiKey(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);
 
 async function sendEmail(req: NextApiRequest, res: NextApiResponse) {
   try {
