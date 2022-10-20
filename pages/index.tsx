@@ -9,7 +9,7 @@ import { supabase } from "../utilities/supabaseClient";
 
 const Home: NextPage = ({ data, posts }: any) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
-    slidesToScroll: 4,
+    slidesToScroll: 3,
     loop: true,
   });
   const [emblaRefTwo, emblaApiTwo] = useEmblaCarousel({ slidesToScroll: 5 });
@@ -229,12 +229,13 @@ const Home: NextPage = ({ data, posts }: any) => {
 } */
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const producto = await supabase.from("producto").select();
+  const producto = await supabase.from("producto").select().order("creado_en", { ascending: true }).limit(10);
   const publicaciones = await supabase
     .from("publicación")
     .select(
       `id, creado_en, titulo, contenido, actualizado_en, id_imagen(enlace)`
-    );
+    )
+    .limit(10);
   const imagenProducto = await supabase
     .from("imagen_producto")
     .select(`id_producto, id_imagen(enlace)`);
