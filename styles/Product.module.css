@@ -31,19 +31,6 @@
   font-weight: 600;
 }
 
-.image {
-  width: 260px;
-  height: 240px;
-  object-fit: contain;
-}
-
-.image picture {
-  width: 260px;
-  height: 240px;
-  display: grid;
-  place-items: center;
-}
-
 .image img {
   width: 260px;
   height: 240px;
@@ -56,4 +43,25 @@
   background-color: rgb(220, 220, 220);
   height: 1px;
   border: 0;
+}
+
+@media (max-width: 400px) {
+  .container {
+    width: 150px;
+    height: 200px;
+  }
+
+  .image img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .information {
+    padding: 2px 4px;
+  }
+  
+  .container .title, .price {
+    font-size: 8px;
+    font-weight: 600;
+  }
 }

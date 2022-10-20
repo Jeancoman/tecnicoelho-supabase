@@ -1,7 +1,7 @@
 .header {
   display: grid;
   place-items: center;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 1fr 3.5fr;
   padding: 25px 10px;
   border-bottom: 1px solid rgb(210, 210, 210);
   position: sticky;
@@ -17,8 +17,6 @@
 }
 
 .container img {
-  height: 42px;
-  width: 280px;
   object-fit: contain;
   cursor: pointer;
   margin-left: 70px;
@@ -38,14 +36,14 @@
   gap: 15px;
   width: max-content;
   font-family: "Open Sans";
-  font-size: 15px;
+  font-size: 1em;
   font-weight: 600;
 }
 
 .a {
   color: inherit;
   text-decoration: inherit;
-  text-transform: uppercase;
+  text-transform: capitalize;
 }
 
 .li {
@@ -159,6 +157,19 @@
   border: 1px solid var(--main-color);
   border-radius: 5px;
   color: black;
+}
+
+@media (max-width: 600px){
+  .header {
+    grid-template-columns: none;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .container img {
+    height: 50px;
+    width: 200px
+  }
+
 }
 
 

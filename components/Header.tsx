@@ -28,6 +28,11 @@ const Header = () => {
               <a className={styles.a}>Nosotros</a>
             </li>
           </Link>
+          <Link href={"/galeria"}>
+            <li className={styles.li}>
+              <a className={styles.a}>Galería</a>
+            </li>
+          </Link>
           <Link href={"/blog"}>
             <li className={styles.li}>
               <a className={styles.a}>Publicaciones</a>

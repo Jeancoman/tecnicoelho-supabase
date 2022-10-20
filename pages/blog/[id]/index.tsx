@@ -8,24 +8,24 @@ const Post: NextPage = ({ data }: any) => {
   return (
     <main className={styles.main}>
       <Head>
-        <title>{data.titulo}</title>
+        <title>{data?.titulo}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <div className={styles.container}>
         <div>
           <picture>
-            <source srcSet={data.id_imagen} />
+            <source srcSet={data?.id_imagen} />
             <img
-              src={data.id_imagen}
+              src={data?.id_imagen}
               alt="Perfil"
               referrerPolicy="no-referrer"
             />
           </picture>
         </div>
         <div className={styles.preview}>
-          <div className={styles.fecha}>{data.creado_en}</div>
-          <div className={styles.titulo}>{data.titulo}</div>
-          <p className={styles.contenido}>{data.contenido}</p>
+          <div className={styles.fecha}>{data?.creado_en}</div>
+          <div className={styles.titulo}>{data?.titulo}</div>
+          <p className={styles.contenido}>{data?.contenido}</p>
         </div>
       </div>
     </main>
@@ -67,7 +67,8 @@ export const getStaticProps: GetStaticProps = async ({ params }: any) => {
     .from("publicación")
     .select(
       `id, creado_en, titulo, contenido, actualizado_en, id_imagen(enlace)`
-    );
+    )
+    .eq("id", params.id);
 
   const post = publicaciones.data?.map((publicacion: any) => {
     return {
@@ -77,6 +78,8 @@ export const getStaticProps: GetStaticProps = async ({ params }: any) => {
   });
 
   const data = post?.[0];
+
+  console.log(data);
 
   return {
     props: {

@@ -1,9 +1,9 @@
 import { NextPage } from "next";
 import { useCallback, useEffect, useState } from "react";
 import AdminPanel from "../../../components/AdminPanel";
-import BlogFeed from "../../../components/BlogFeed";
 import styles from "/styles/ProductPanel.module.css";
 import { useRouter } from "next/router";
+import { supabase } from "../../../utilities/supabaseClient";
 
 const ProductosPage: NextPage = () => {
   const [data, setData] = useState<{ [key: string]: string }[]>();
@@ -13,6 +13,29 @@ const ProductosPage: NextPage = () => {
 
   useEffect(() => {
     async function fetch() {
+      const producto = await supabase.from("producto").select();
+
+      const imagenProducto = await supabase
+        .from("imagen_producto")
+        .select(`id_producto, id_imagen(id, enlace)`);
+
+      const curated: any = producto.data?.map((producto: any) => {
+        const imagenes: any = imagenProducto.data?.filter(
+          (imagen) => imagen.id_producto === producto.id
+        );
+
+        const enlaces: any = imagenes?.map((imagen: any) => {
+          return { imagen: imagen.id_imagen.enlace, id: imagen.id_imagen.id };
+        });
+
+        return {
+          ...producto,
+          imagenes: enlaces,
+        };
+      });
+
+      setData(curated);
+      console.log(curated);
     }
     fetch();
   }, []);
@@ -23,6 +46,8 @@ const ProductosPage: NextPage = () => {
     setToEdit(doc);
     setEditing(true);
   };
+
+  console.log(editing);
 
   return (
     <>
@@ -43,8 +68,8 @@ const ProductosPage: NextPage = () => {
                   <div className={styles.data} key={doc.id}>
                     <div>{doc.nombre}</div>
                     <div>{doc.precio}</div>
-                    <div>{doc.fecha_creacion}</div>
-                    <div>{doc.fecha_actualizacion}</div>
+                    <div>{doc.creado_en}</div>
+                    <div>{doc.actualizado_en}</div>
                     <div>
                       <button onClick={() => editBtn(doc.id)}>Editar</button>
                       <button>Eliminar</button>
@@ -55,44 +80,124 @@ const ProductosPage: NextPage = () => {
             </div>
           </div>
         )}
-        {editing && <EditForm data={toEdit} set={setEditing} value={editing}/>}
+        {editing && (
+          <EditForm producto={toEdit} set={setEditing} value={editing} />
+        )}
       </div>
     </>
   );
 };
 
-const EditForm = ({ data, set, value }: any) => {
-  const [contenido, setContenido] = useState<string>(data.contenido);
-  const [titulo, setTitulo] = useState<string>(data.titulo);
-  const [portada, setPortada] = useState<string>(data.imagen);
-  const [imagenes, setImagenes] = useState<{ [key: string]: string }[]>(data.imagenes);
+const EditForm = ({ producto, set, value }: any) => {
+  const [descripcion, setDescripcion] = useState<string>(producto.descripción);
+  const [nombre, setNombre] = useState<string>(producto.nombre);
+  const [precio, setPrecio] = useState<string>(producto.precio);
+  const [imagenes, setImagenes] = useState<{ [key: string]: string }[]>(
+    producto.imagenes
+  );
+  const [id, setId] = useState<any>();
+  const [eliminar, setEliminar] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function fetch() {
+      const { data, error } = await supabase
+        .from("imagen")
+        .select()
+        .order("id", { ascending: false })
+        .limit(1)
+        .single();
+      setId(data.id);
+    }
+
+    async function imagenProducto() {
+      const { data, error } = await supabase
+        .from("imagen_producto")
+        .select()
+        .eq("id_producto", producto.id);
+    }
+
+    imagenProducto();
+    fetch();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    set(!value)
+    set(!value);
+  };
+
+  const handleChange = (index: any, event: any) => {
+    let data = [...imagenes];
+    data[index][event.target.name] = event.target.value;
+    setImagenes(data);
+    console.log(imagenes);
+        console.log(eliminar);
+  };
+
+  const añadirImagen = (e: any) => {
+    e.preventDefault();
+
+    let newField = { imagen: "", id: id + 1 };
+
+    setId(id + 1);
+
+    setImagenes([...imagenes, newField]);
+  };
+
+  const eliminarImagenSupabase = () => {};
+
+  const removeFields = (index: any, id: any) => {
+    let data = [...imagenes];
+    data.splice(index, 1);
+    
+    setEliminar(eliminar.concat(id));
+
+    console.log(eliminar);
+
+    setImagenes(data);
   };
 
   return (
     <div className={styles["edit-form"]}>
-      <h2>Publicación - {data.id}</h2>
+      <h2>Producto - {producto.id}</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          defaultValue={titulo}
-          onChange={(e) => setTitulo(e.target.value)}
+          defaultValue={nombre}
+          onChange={(e) => setNombre(e.target.value)}
         />
         <input
           type="text"
-          defaultValue={portada}
-          onChange={(e) => setPortada(e.target.value)}
+          defaultValue={precio}
+          onChange={(e) => setPrecio(e.target.value)}
         />
+        {imagenes.map((input, index) => {
+          return (
+            <div key={index} className={styles["image-form"]}>
+              <input
+                name="imagen"
+                placeholder="Imagen"
+                defaultValue={input.imagen}
+                onChange={(e) => handleChange(index, e)}
+              />
+              { index > 0 ?
+              <span className={styles.remove} onClick={() => removeFields(index, input.id)}>
+                X
+              </span> : null}
+            </div>
+          );
+        })}
+        <button onClick={añadirImagen}>Add More..</button>
         <textarea
-          defaultValue={contenido}
-          onChange={(e) => setContenido(e.target.value)}
+          defaultValue={descripcion}
+          onChange={(e) => setDescripcion(e.target.value)}
         ></textarea>
         <div className={styles.buttons}>
-        <button className={styles.button}>Guardar cambios</button>
-        <button className={styles.button} onClick={() => set(!value)}>Cancelar</button>
+          <button className={styles.button}>Guardar cambios</button>
+          <button className={styles.button} onClick={() => set(!value)}>
+            Volver
+          </button>
         </div>
       </form>
     </div>

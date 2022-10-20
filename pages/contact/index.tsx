@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import styles from "/styles/Contact.module.css";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import Head from "next/head";
 
 const Contact: NextPage = () => {
   const [nombre, setNombre] = useState("");
@@ -49,6 +50,10 @@ const Contact: NextPage = () => {
 
   return (
     <main>
+      <Head>
+        <title>Contacto</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       <section className={styles.contact}>
         <div className={styles["h2-container"]}>
           <h2>Contáctanos</h2>
@@ -110,7 +115,7 @@ const Contact: NextPage = () => {
           </div>
           <div className={styles.right}>
             <h3>Formulario de contacto</h3>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} method="POST">
               <input
                 type="text"
                 name="firstName"

@@ -4,6 +4,7 @@ import AdminPanel from "../../../components/AdminPanel";
 import styles from "/styles/PostPanel.module.css";
 import { useRouter } from "next/router";
 import toast, { Toaster } from "react-hot-toast";
+import { supabase } from "../../../utilities/supabaseClient";
 
 const Posts: NextPage = () => {
   const [data, setData] = useState<{ [key: string]: string }[]>();
@@ -13,6 +14,22 @@ const Posts: NextPage = () => {
 
   useEffect(() => {
     async function fetch() {
+      const publicaciones = await supabase
+        .from("publicación")
+        .select(
+          `id, creado_en, titulo, contenido, actualizado_en, id_imagen(id, enlace)`
+        );
+
+      console.log(publicaciones);
+
+      const post = publicaciones.data?.map((publicacion: any) => {
+        return {
+          ...publicacion,
+          imagen: publicacion.id_imagen.enlace,
+          id_imagen: publicacion.id_imagen.id,
+        };
+      });
+      setData(post);
     }
     fetch();
   }, []);
@@ -43,8 +60,8 @@ const Posts: NextPage = () => {
                   <div className={styles.data} key={doc.id}>
                     <div>{doc.titulo}</div>
                     <div>{doc.imagen}</div>
-                    <div>{doc.fecha_creacion}</div>
-                    <div>{doc.fecha_actualizacion}</div>
+                    <div>{doc.creado_en}</div>
+                    <div>{doc.actualizado_en}</div>
                     <div>
                       <button onClick={() => editBtn(doc.id)}>Editar</button>
                       <button>Eliminar</button>
@@ -64,11 +81,21 @@ const Posts: NextPage = () => {
 const EditForm = ({ data, set, value }: any) => {
   const [contenido, setContenido] = useState<string>(data.contenido);
   const [titulo, setTitulo] = useState<string>(data.titulo);
-  const [portada, setPortada] = useState<string>(data.imagen);
+  const [imagen, setImagen] = useState<string>(data.imagen);
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
+    const updatePost = await supabase
+      .from("publicación")
+      .update({ titulo: titulo, contenido: contenido })
+      .eq("id", data.id);
 
+    const updateImagenPost = await supabase
+      .from("imagen")
+      .update({ enlace: imagen })
+      .eq("id", data.id_imagen);
+
+    console.log(updatePost, updateImagenPost);
   };
 
   return (
@@ -82,15 +109,17 @@ const EditForm = ({ data, set, value }: any) => {
         />
         <input
           type="text"
-          defaultValue={portada}
-          onChange={(e) => setPortada(e.target.value)}
+          defaultValue={imagen}
+          onChange={(e) => setImagen(e.target.value)}
         />
         <textarea
           defaultValue={contenido}
           onChange={(e) => setContenido(e.target.value)}
         ></textarea>
         <div className={styles.buttons}>
-          <button className={styles.button}>Guardar cambios</button>
+          <button type="submit" className={styles.button}>
+            Guardar cambios
+          </button>
           <button className={styles.button} onClick={() => set(!value)}>
             Volver
           </button>

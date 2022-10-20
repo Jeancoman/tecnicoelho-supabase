@@ -21,9 +21,6 @@ const Products: NextPage = ({ data }: any) => {
           />
         </div>
         <div className={styles["right-container"]}>
-          <h3>
-            Todos <span>{""}</span>
-          </h3>
           <div className={styles.container}>
             {data.map((data: any) => {
               return (

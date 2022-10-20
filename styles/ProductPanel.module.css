@@ -86,12 +86,13 @@
   
   .edit-form {
     place-self: center;
+    margin: 20px 0;
   }
   
   .edit-form textarea {
     resize: none;
-    width: 800px;
-    height: 400px;
+    width: 100%;
+    min-height: 400px;
     font-family: "Open sans";
     overflow: scroll;
     overflow-x: hidden;
@@ -163,6 +164,7 @@
       display: flex;
       flex-direction: column;
       gap: 20px;
+      width: 800px;
   }
   
   .edit-form input {
@@ -181,4 +183,21 @@
   .buttons {
       display: flex;
       gap: 10px;
+  }
+
+  .image-form input {
+    width: 100%;
+  }
+
+  .image-form {
+    position: relative;
+  }
+
+  .remove {
+    position: absolute;
+    top: 25%;
+    margin-left: 10px;
+    font-family: "Open Sans";
+    font-weight: 700;
+    cursor: pointer
   }

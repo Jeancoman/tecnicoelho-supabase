@@ -15,15 +15,17 @@
 
   html {
     height: 100%;
+    width: 100%;
   }
 
-  body {
+  body, html {
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     background-color: #F6F9FC; 
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    justify-items: center;
+    align-items: center;
   }
 
 img, picture, video, canvas, svg {
