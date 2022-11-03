@@ -21,18 +21,42 @@
 }
 
 .titulo {
-    font-weight: 700;
-    font-size: 30px;
-    color: var(--main-color);
-    cursor: pointer;
+  font-weight: 700;
+  font-size: 30px;
+  color: var(--main-color);
+  cursor: pointer;
 }
 
 .titulo:hover {
-    color: #1182d5
+  color: #1182d5;
 }
 
 .fecha {
-    font-weight: 700;
-    font-size: 18px;
-    color: rgb(100, 100, 100)
+  font-weight: 700;
+  font-size: 18px;
+  color: rgb(100, 100, 100);
+}
+
+@media (max-width: 600px) {
+  .container div:first-of-type picture {
+    object-fit: contain;
+    width: 200px;
+    height: 200px;
+    display: grid;
+    place-items: center;
+  }
+
+  .container {
+    max-width: 400px;
+    height: 200px;
+  }
+
+  .titulo {
+    font-size: 1rem;
+    text-align: left;
+  }
+
+  .fecha {
+    font-size: 1rem;
+  }
 }

@@ -19,12 +19,11 @@ const ProductPage: NextPage = ({ data }: any) => {
   };
 
   return (
-    <main>
+    <main className={styles.product}>
       <Head>
         <title>{data?.nombre}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <section className={styles.product}>
         <div className={styles.container}>
           <div className={styles["product-view"]}>
             <picture className={styles.image}>
@@ -54,7 +53,7 @@ const ProductPage: NextPage = ({ data }: any) => {
               Precio unitario de <span>${data?.precio} USD</span>
             </div>
             <button className={styles.button} onClick={handleShow}>
-              Contáctanos
+              Contáctanos por email
             </button>
           </div>
         </div>
@@ -67,7 +66,6 @@ const ProductPage: NextPage = ({ data }: any) => {
             <p>{data?.descripción}</p>
           </div>
         </div>
-      </section>
       <Modal show={show} handleClose={handleClose} producto={data?.nombre} />
       <Toaster />
     </main>
@@ -89,7 +87,7 @@ export const getStaticPaths = async () => {
 
   return {
     paths,
-    fallback: true,
+    fallback: "blocking",
   };
 };
 
@@ -113,6 +111,12 @@ export const getStaticProps: GetStaticProps = async ({ params }: any) => {
   });
 
   const data = curated?.[0];
+
+  if(!data){
+    return {
+      notFound: true,
+    }
+  }
 
   return {
     props: {

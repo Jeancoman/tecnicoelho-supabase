@@ -1,16 +1,19 @@
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import { useCallback, useEffect, useState } from "react";
 import AdminPanel from "../../../components/AdminPanel";
 import styles from "/styles/PostPanel.module.css";
 import { useRouter } from "next/router";
 import toast, { Toaster } from "react-hot-toast";
 import { supabase } from "../../../utilities/supabaseClient";
+import Loader from "../../../components/Loader";
+import { withPageAuth } from "@supabase/auth-helpers-nextjs";
+import Head from "next/head";
 
 const Posts: NextPage = () => {
   const [data, setData] = useState<{ [key: string]: string }[]>();
   const [toEdit, setToEdit] = useState<{ [key: string]: string }>();
   const [editing, setEditing] = useState(false);
-  console.log(data);
+  const router = useRouter();
 
   useEffect(() => {
     async function fetch() {
@@ -31,8 +34,10 @@ const Posts: NextPage = () => {
       });
       setData(post);
     }
-    fetch();
-  }, []);
+    if (!data) {
+      fetch();
+    }
+  }, [data]);
 
   const editBtn = (id: string) => {
     const filtered = data?.filter((data) => data.id == id);
@@ -41,10 +46,35 @@ const Posts: NextPage = () => {
     setEditing(true);
   };
 
+  const deleteBtn = async (id: any, id_imagen: any) => {
+    const deletingPost = await supabase
+      .from("publicación")
+      .delete()
+      .eq("id", id);
+    const deletingImg = await supabase
+      .from("imagen")
+      .delete()
+      .eq("id", id_imagen);
+
+    setData(undefined);
+  };
+
   return (
     <>
       <div className={styles.container}>
-        <AdminPanel />
+      <Head>
+        <title>Panel de Control</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+        <div>
+          <AdminPanel />
+          <button
+            onClick={() => router.push("/admin/posts/crear")}
+            className={styles["new-button"]}
+          >
+            Nueva publicación
+          </button>
+        </div>
         {!editing && (
           <div className={styles["data-container"]}>
             <div className={styles["cel"]}>
@@ -64,21 +94,29 @@ const Posts: NextPage = () => {
                     <div>{doc.actualizado_en}</div>
                     <div>
                       <button onClick={() => editBtn(doc.id)}>Editar</button>
-                      <button>Eliminar</button>
+                      <button onClick={() => deleteBtn(doc.id, doc.id_imagen)}>
+                        Eliminar
+                      </button>
                     </div>
                   </div>
                 );
               })}
             </div>
+            {!data && (
+              <div className={styles.loader}>
+                <Loader />
+              </div>
+            )}
           </div>
         )}
-        {editing && <EditForm data={toEdit} set={setEditing} value={editing} />}
+        {editing && <EditForm data={toEdit} set={setEditing} value={editing} setData={setData} />}
+        <Toaster />
       </div>
     </>
   );
 };
 
-const EditForm = ({ data, set, value }: any) => {
+const EditForm = ({ data, set, value, setData }: any) => {
   const [contenido, setContenido] = useState<string>(data.contenido);
   const [titulo, setTitulo] = useState<string>(data.titulo);
   const [imagen, setImagen] = useState<string>(data.imagen);
@@ -95,12 +133,19 @@ const EditForm = ({ data, set, value }: any) => {
       .update({ enlace: imagen })
       .eq("id", data.id_imagen);
 
-    console.log(updatePost, updateImagenPost);
+      toast.success("Producto actualizado", {
+        style: {
+          fontFamily: "Open Sans",
+        },
+      });
+
+      setData(undefined);
+      set(!value)
   };
 
   return (
     <div className={styles["edit-form"]}>
-      <h2>Publicación - {data.id}</h2>
+      <h2>{titulo}</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -125,23 +170,10 @@ const EditForm = ({ data, set, value }: any) => {
           </button>
         </div>
       </form>
-      <Toaster />
     </div>
   );
 };
 
-/* export async function getStaticProps() {
-  const db = getFirestore(firebaseApp);
-  const querySnapshot = await getDocs(collection(db, "publicaciones"));
-  const data = querySnapshot.docs.map((doc) => {
-    return { ...doc.data(), id: doc.id };
-  });
-
-  return {
-    props: {
-      data,
-    },
-  };
-} */
+export const getServerSideProps = withPageAuth({ redirectTo: "/admin/login" });
 
 export default Posts;

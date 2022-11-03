@@ -1,19 +1,28 @@
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import { useCallback, useEffect, useState } from "react";
 import AdminPanel from "../../../components/AdminPanel";
 import styles from "/styles/ProductPanel.module.css";
 import { useRouter } from "next/router";
 import { supabase } from "../../../utilities/supabaseClient";
+import toast, { Toaster } from "react-hot-toast";
+import Loader from "../../../components/Loader";
+import { getCookies } from "cookies-next";
+import { withPageAuth } from "@supabase/auth-helpers-nextjs";
+import Head from "next/head";
 
 const ProductosPage: NextPage = () => {
   const [data, setData] = useState<{ [key: string]: string }[]>();
   const [toEdit, setToEdit] = useState<{ [key: string]: string }>();
   const [editing, setEditing] = useState(false);
+  const router = useRouter();
   console.log(data);
 
   useEffect(() => {
     async function fetch() {
-      const producto = await supabase.from("producto").select();
+      const producto = await supabase
+        .from("producto")
+        .select()
+        .order("id", { ascending: true });
 
       const imagenProducto = await supabase
         .from("imagen_producto")
@@ -35,10 +44,11 @@ const ProductosPage: NextPage = () => {
       });
 
       setData(curated);
-      console.log(curated);
     }
-    fetch();
-  }, []);
+    if (!data) {
+      fetch();
+    }
+  }, [data]);
 
   const editBtn = (id: string) => {
     const filtered = data?.filter((data) => data.id == id);
@@ -47,12 +57,50 @@ const ProductosPage: NextPage = () => {
     setEditing(true);
   };
 
-  console.log(editing);
+  const deleteBtn = async (id: any, imagenes: any) => {
+    const deleting = await supabase
+      .from("producto")
+      .delete()
+      .eq("id", id)
+      .select();
+
+    console.log(deleting);
+
+    imagenes?.forEach(async (img: any) => {
+      const deleting = await supabase
+        .from("imagen_producto")
+        .delete()
+        .eq("id_imagen", img.id);
+    });
+
+    imagenes?.forEach(async (img: any) => {
+      const deleting = await supabase
+        .from("imagen")
+        .delete()
+        .eq("imagen", img.id);
+    });
+
+    setData(undefined);
+  };
 
   return (
     <>
       <div className={styles.container}>
-        <AdminPanel />
+      <Head>
+        <title>Panel de Control</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+        <div>
+          <AdminPanel />
+          {!editing && (
+            <button
+              onClick={() => router.push("/admin/products/crear")}
+              className={styles["new-button"]}
+            >
+              Nuevo producto
+            </button>
+          )}
+        </div>
         {!editing && (
           <div className={styles["data-container"]}>
             <div className={styles["cel"]}>
@@ -72,88 +120,138 @@ const ProductosPage: NextPage = () => {
                     <div>{doc.actualizado_en}</div>
                     <div>
                       <button onClick={() => editBtn(doc.id)}>Editar</button>
-                      <button>Eliminar</button>
+                      <button onClick={() => deleteBtn(doc.id, doc.imagenes)}>
+                        Eliminar
+                      </button>
                     </div>
                   </div>
                 );
               })}
             </div>
+            {!data && (
+              <div className={styles.loader}>
+                <Loader />
+              </div>
+            )}
           </div>
         )}
         {editing && (
-          <EditForm producto={toEdit} set={setEditing} value={editing} />
+          <EditForm producto={toEdit} set={setEditing} value={editing} setData={setData} />
         )}
+        <Toaster />
       </div>
     </>
   );
 };
 
-const EditForm = ({ producto, set, value }: any) => {
+const EditForm = ({ producto, set, value, setData }: any) => {
   const [descripcion, setDescripcion] = useState<string>(producto.descripción);
   const [nombre, setNombre] = useState<string>(producto.nombre);
   const [precio, setPrecio] = useState<string>(producto.precio);
   const [imagenes, setImagenes] = useState<{ [key: string]: string }[]>(
     producto.imagenes
   );
-  const [id, setId] = useState<any>();
   const [eliminar, setEliminar] = useState<any[]>([]);
+  const [error, setError] = useState(false);
 
-  useEffect(() => {
-    async function fetch() {
-      const { data, error } = await supabase
-        .from("imagen")
-        .select()
-        .order("id", { ascending: false })
-        .limit(1)
-        .single();
-      setId(data.id);
-    }
-
-    async function imagenProducto() {
-      const { data, error } = await supabase
-        .from("imagen_producto")
-        .select()
-        .eq("id_producto", producto.id);
-    }
-
-    imagenProducto();
-    fetch();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    set(!value);
+
+    eliminar?.forEach(async (id) => {
+      const deleting = await supabase
+        .from("imagen_producto")
+        .delete()
+        .eq("id_imagen", id)
+        .select();
+
+        if(deleting.status > 299){
+          setError(true);
+        }
+    });
+
+    if (error) {
+      toast.error("Error al actualizar producto.", {
+        style: {
+          fontFamily: "Open Sans",
+        },
+      });
+    } else {
+      eliminar?.forEach(async (id) => {
+        const deleting = await supabase
+          .from("imagen")
+          .delete()
+          .eq("id", id)
+          .select();
+      });
+    }
+
+    imagenes.forEach(async (img, index) => {
+      if (img.hasOwnProperty("id")) {
+        const updating = await supabase
+          .from("imagen")
+          .update({ enlace: img.imagen })
+          .eq("id", img.id)
+          .select()
+          .single();
+      } else {
+        const inserting = await supabase
+          .from("imagen")
+          .insert({ enlace: img.imagen })
+          .select()
+          .single();
+
+        if (inserting.status >= 200 && inserting.status <= 299) {
+          const insertingIP = await supabase
+            .from("imagen_producto")
+            .insert({ id_imagen: inserting.data.id, id_producto: producto.id })
+            .select();
+        }
+      }
+
+      if(index === imagenes.length - 1 ){
+        toast.success("Producto actualizado", {
+          style: {
+            fontFamily: "Open Sans",
+          },
+        });
+        setData(undefined);
+        set(!value)
+      }
+    });
+
+    const updating = await supabase
+      .from("producto")
+      .update({
+        nombre: nombre,
+        precio: Number(precio),
+        descripción: descripcion,
+      })
+      .eq("id", producto.id);
   };
 
   const handleChange = (index: any, event: any) => {
     let data = [...imagenes];
     data[index][event.target.name] = event.target.value;
     setImagenes(data);
-    console.log(imagenes);
-        console.log(eliminar);
   };
 
   const añadirImagen = (e: any) => {
     e.preventDefault();
 
-    let newField = { imagen: "", id: id + 1 };
-
-    setId(id + 1);
+    let newField = { imagen: "" };
 
     setImagenes([...imagenes, newField]);
   };
 
-  const eliminarImagenSupabase = () => {};
-
   const removeFields = (index: any, id: any) => {
     let data = [...imagenes];
-    data.splice(index, 1);
-    
-    setEliminar(eliminar.concat(id));
 
-    console.log(eliminar);
+    data.splice(index, 1);
+
+    if (typeof id == "number") {
+      setEliminar(eliminar.concat(id));
+      console.log(eliminar);
+    }
 
     setImagenes(data);
   };
@@ -164,12 +262,12 @@ const EditForm = ({ producto, set, value }: any) => {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          defaultValue={nombre}
+          value={nombre}
           onChange={(e) => setNombre(e.target.value)}
         />
         <input
           type="text"
-          defaultValue={precio}
+          value={precio}
           onChange={(e) => setPrecio(e.target.value)}
         />
         {imagenes.map((input, index) => {
@@ -178,19 +276,25 @@ const EditForm = ({ producto, set, value }: any) => {
               <input
                 name="imagen"
                 placeholder="Imagen"
-                defaultValue={input.imagen}
+                value={input.imagen}
                 onChange={(e) => handleChange(index, e)}
               />
-              { index > 0 ?
-              <span className={styles.remove} onClick={() => removeFields(index, input.id)}>
-                X
-              </span> : null}
+              {index > 0 ? (
+                <span
+                  className={styles.remove}
+                  onClick={() => removeFields(index, input?.id)}
+                >
+                  X
+                </span>
+              ) : null}
             </div>
           );
         })}
-        <button onClick={añadirImagen}>Add More..</button>
+        <button onClick={añadirImagen} className={styles["add-button"]}>
+          Añadir enlace
+        </button>
         <textarea
-          defaultValue={descripcion}
+          value={descripcion}
           onChange={(e) => setDescripcion(e.target.value)}
         ></textarea>
         <div className={styles.buttons}>
@@ -204,18 +308,6 @@ const EditForm = ({ producto, set, value }: any) => {
   );
 };
 
-/* export async function getStaticProps() {
-  const db = getFirestore(firebaseApp);
-  const querySnapshot = await getDocs(collection(db, "publicaciones"));
-  const data = querySnapshot.docs.map((doc) => {
-    return { ...doc.data(), id: doc.id };
-  });
-
-  return {
-    props: {
-      data,
-    },
-  };
-} */
+export const getServerSideProps = withPageAuth({ redirectTo: "/admin/login" });
 
 export default ProductosPage;

@@ -1,3 +1,4 @@
+import { useUser } from "@supabase/auth-helpers-react";
 import { GetStaticProps, NextPage } from "next";
 import { useEffect, useRef, useState } from "react";
 import { supabase } from "../../utilities/supabaseClient";
@@ -7,12 +8,15 @@ const Galeria: NextPage = ({ data }: any) => {
   const [show, setShow] = useState(false);
   const [current, setCurrent] = useState<string>();
   const [descripcion, setDescripcion] = useState<string>();
+  const user = useUser();
 
   const handleClick = (src: string, description: string) => {
     setCurrent(src);
     setShow(true);
     setDescripcion(description)
   }
+
+  console.log(user)
 
   return (
     <main className={styles.main}>

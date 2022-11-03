@@ -9,10 +9,10 @@ import { supabase } from "../utilities/supabaseClient";
 
 const Home: NextPage = ({ data, posts }: any) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
-    slidesToScroll: 3,
+    slidesToScroll: 1,
     loop: true,
   });
-  const [emblaRefTwo, emblaApiTwo] = useEmblaCarousel({ slidesToScroll: 5 });
+  const [emblaRefTwo, emblaApiTwo] = useEmblaCarousel({ slidesToScroll: 1 });
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -66,7 +66,7 @@ const Home: NextPage = ({ data, posts }: any) => {
                 referrerPolicy="no-referrer"
               />
             </picture>
-            <h2>Soporte Tecnico</h2>
+            <h2>Soporte Técnico</h2>
             <p>Proporcionamos reparación de equipos y soporte tecnico</p>
           </div>
           <div className={styles.service}>
@@ -78,7 +78,7 @@ const Home: NextPage = ({ data, posts }: any) => {
                 referrerPolicy="no-referrer"
               />
             </picture>
-            <h2>Redes Informaticas</h2>
+            <h2>Redes Informáticas</h2>
             <p>
               Nos encargamos de la instalación, configuración y mantenimiento de
               redes informaticas
@@ -132,7 +132,7 @@ const Home: NextPage = ({ data, posts }: any) => {
       </section>
       <section className={styles.information}>
         <h2 className={styles["information-header"]}>
-          Productos más recientes
+          Productos recientes
         </h2>
         <div className={styles["line-break"]}></div>
         <div className={styles["information-container"]}>
@@ -165,7 +165,7 @@ const Home: NextPage = ({ data, posts }: any) => {
       </section>
       <section className={styles.information}>
         <h2 className={styles["information-header"]}>
-          Publicaciones más recientes
+          Publicaciones recientes
         </h2>
         <div className={styles["line-break"]}></div>
         <div className={styles["information-container"]}>
@@ -177,7 +177,7 @@ const Home: NextPage = ({ data, posts }: any) => {
                     <div className={styles["embla__slide"]} key={post?.id}>
                       <BlogFeed
                         titulo={post?.titulo}
-                        fecha={post?.creado_en}
+                        fecha={post?.creado_en.slice(0, 10)}
                         imagen={post?.id_imagen}
                         id={post?.id}
                         key={post?.id}

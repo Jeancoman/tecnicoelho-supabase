@@ -81,5 +81,27 @@
 }
 
 .center div p {
-    font-size: 15px;
+    font-size: 1rem;
+}
+
+@media (max-width: 600px ) {
+    .main {
+        max-width: 400px;
+        height: 1200px;
+    }
+
+    .right picture img {
+        border-radius: 5px;
+        max-width: 500px;
+        max-height: 300px;
+    }
+
+    .left{
+        max-width: 500px;
+    }
+
+    .center div {
+        width: 220px;
+    }
+    
 }

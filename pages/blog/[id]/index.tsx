@@ -23,7 +23,7 @@ const Post: NextPage = ({ data }: any) => {
           </picture>
         </div>
         <div className={styles.preview}>
-          <div className={styles.fecha}>{data?.creado_en}</div>
+          <div className={styles.fecha}>{data?.creado_en.slice(0, 10)}</div>
           <div className={styles.titulo}>{data?.titulo}</div>
           <p className={styles.contenido}>{data?.contenido}</p>
         </div>
@@ -58,7 +58,7 @@ export const getStaticPaths = async () => {
 
   return {
     paths,
-    fallback: true,
+    fallback: "blocking",
   };
 };
 
@@ -79,7 +79,11 @@ export const getStaticProps: GetStaticProps = async ({ params }: any) => {
 
   const data = post?.[0];
 
-  console.log(data);
+  if(!data){
+    return {
+      notFound: true,
+    }
+  }
 
   return {
     props: {

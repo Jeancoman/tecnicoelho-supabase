@@ -1,17 +1,32 @@
 import Link from "next/link";
+import { useState } from "react";
 import styles from "../styles/Header.module.css";
+import cn from "classnames";
 
 const Header = () => {
+  const [display, setDisplay] = useState(false);
+
   return (
     <header className={styles.header}>
-      <picture className={styles.container}>
-        <source srcSet="/Logo-TecniCoelho-sin-eslogan.png" type="image/png" />
-        <img
-          src="/Logo-TecniCoelho-sin-eslogan.png"
-          alt="Profile placeholder"
-        />
-      </picture>
-      <nav className={styles.nav}>
+      <div className={styles["logo-menu"]}>
+        <picture className={styles.container}>
+          <source srcSet="/Logo-TecniCoelho-sin-eslogan.png" type="image/png" />
+          <img
+            src="/Logo-TecniCoelho-sin-eslogan.png"
+            alt="Profile placeholder"
+          />
+        </picture>
+        <picture className={styles.menu} onClick={() => setDisplay(!display)}>
+          <source srcSet="/menu.svg" type="image/svg" />
+          <img src="/menu.svg" alt="Profile placeholder" />
+        </picture>
+      </div>
+      <nav
+        className={cn({
+          [styles["nav"] + " " + styles["toggled"]]: display,
+          [styles["nav"] + " " + styles["active"]]: !display,
+        })}
+      >
         <ul className={styles.ul}>
           <Link href={"/"}>
             <li className={styles.li}>

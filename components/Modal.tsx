@@ -1,6 +1,6 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import styles from "../styles/Modal.module.css";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 type Show = {
   show: boolean;
@@ -12,12 +12,12 @@ const Modal = ({ show, handleClose, producto }: Show) => {
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [email, setEmail] = useState("");
-  const [asunto, setAsunto] = useState("");
-  const [mensaje, setMensaje] = useState("");
+  const [asunto, setAsunto] = useState("Me interesa un producto.");
+  const [mensaje, setMensaje] = useState("Hola, me interesa el producto " + producto + ".");
   const [telefono, setTelefono] = useState("");
   const ref = useRef<HTMLDialogElement>(null);
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const res = await fetch("/api/send", {
@@ -37,14 +37,13 @@ const Modal = ({ show, handleClose, producto }: Show) => {
     const { error } = await res.json();
 
     if (error) {
-      console.log(error);
       toast.error("No se pudo enviar el mensaje", {
         style: {
           fontFamily: "Open Sans",
         },
       });
-      ref.current?.close();
-      return;
+
+      return ref.current?.close();
     }
 
     toast.success("Mensaje enviado exitosamente!", {
@@ -52,6 +51,7 @@ const Modal = ({ show, handleClose, producto }: Show) => {
         fontFamily: "Open Sans",
       },
     });
+
     ref.current?.close();
   };
 
@@ -112,7 +112,7 @@ const Modal = ({ show, handleClose, producto }: Show) => {
             id=""
             placeholder="Asunto*"
             required
-            defaultValue={"Me interesa un producto."}
+            value={asunto}
             onChange={(e) => setAsunto(e.target.value)}
           />
           <textarea
@@ -120,7 +120,7 @@ const Modal = ({ show, handleClose, producto }: Show) => {
             id=""
             placeholder="Mensaje*"
             required
-            defaultValue={"Hola, me interesa el producto " + producto}
+            value={mensaje}
             onChange={(e) => setMensaje(e.target.value)}
           ></textarea>
           <button type="submit">Contáctanos</button>

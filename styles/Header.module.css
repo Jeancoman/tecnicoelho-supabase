@@ -1,6 +1,6 @@
 .header {
   display: grid;
-  place-items: center;
+  place-content: center;
   grid-template-columns: 1fr 3.5fr;
   padding: 25px 10px;
   border-bottom: 1px solid rgb(210, 210, 210);
@@ -16,6 +16,19 @@
   object-fit: contain;
 }
 
+.menu {
+  width: 35px;
+  height: 35px;
+  display: none;
+  cursor: pointer;
+}
+
+.logo-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .container img {
   object-fit: contain;
   cursor: pointer;
@@ -26,6 +39,16 @@
   margin-left: 300px;
   background-color: white;
 }
+
+.active {
+  display: flex;
+  align-items: center;
+}
+
+.toggled {
+  display: flex;
+}
+
 
 .ul {
   align-self: center;
@@ -104,8 +127,6 @@
 
 }
 
-
-
 .user-container {
   display: grid;
   grid-template-columns: 40px 40px;
@@ -162,16 +183,58 @@
 @media (max-width: 600px){
   .header {
     grid-template-columns: none;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: auto;
   }
 
   .container img {
-    height: 50px;
-    width: 200px
+    height: 100px;
+    width: 300px
   }
+
+  .ul {
+    flex-direction: column;
+    justify-self: flex-start;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .nav {
+    margin-left: 0px;
+  }
+
+  .active {
+    display: none;
+  }
+
+  .li a {
+    text-align: start;
+  }
+
+  .menu {
+    display: block;
+  }
+
+  .container img {
+    margin-left: 0px;
+  }
+
+  .logo-menu {
+    gap: 50px;
+  }
+
+
 
 }
 
+@media only screen and (min-width: 600px) {}
 
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}
 
 

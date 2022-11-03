@@ -49,12 +49,11 @@ const Contact: NextPage = () => {
   };
 
   return (
-    <main>
+    <main className={styles.contact}>
       <Head>
         <title>Contacto</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <section className={styles.contact}>
         <div className={styles["h2-container"]}>
           <h2>Contáctanos</h2>
           <hr />
@@ -166,7 +165,6 @@ const Contact: NextPage = () => {
             </form>
           </div>
         </div>
-      </section>
       <Toaster />
     </main>
   );

@@ -6,12 +6,11 @@ import Head from "next/head";
 
 const Products: NextPage = ({ data }: any) => {
   return (
-    <main>
+    <main className={styles.products}>
       <Head>
         <title>Productos</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <section className={styles.products}>
         <div className={styles["left-container"]}>
           <input
             type="text"
@@ -35,13 +34,12 @@ const Products: NextPage = ({ data }: any) => {
             })}
           </div>
         </div>
-      </section>
     </main>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const producto = await supabase.from("producto").select();
+  const producto = await supabase.from("producto").select().order('id', { ascending: true });
 
   const imagenProducto = await supabase
     .from("imagen_producto")
