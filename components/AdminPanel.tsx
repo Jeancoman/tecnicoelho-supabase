@@ -8,7 +8,7 @@ const AdminPanel = () => {
   const router = useRouter();
 
   const onClick = async () => {
-    await supabase.auth.signOut();
+    const error = await supabase.auth.signOut();
     router.push("/")
   }
 
@@ -69,7 +69,7 @@ const AdminPanel = () => {
               <p>Galería</p>
             </div>
           </Link>
-          <div className={styles.icon}>
+          <div className={styles.icon} onClick={onClick}>
             <div>
               <picture>
                 <source srcSet="/logout.svg" type="image/svg" />
