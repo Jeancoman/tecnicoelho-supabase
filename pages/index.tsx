@@ -131,9 +131,7 @@ const Home: NextPage = ({ data, posts }: any) => {
         </div>
       </section>
       <section className={styles.information}>
-        <h2 className={styles["information-header"]}>
-          Productos recientes
-        </h2>
+        <h2 className={styles["information-header"]}>Productos recientes</h2>
         <div className={styles["line-break"]}></div>
         <div className={styles["information-container"]}>
           <div className={styles.embla}>
@@ -229,12 +227,18 @@ const Home: NextPage = ({ data, posts }: any) => {
 } */
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const producto = await supabase.from("producto").select().order("creado_en", { ascending: true }).limit(10);
+  const producto = await supabase
+    .from("producto")
+    .select()
+    .order("creado_en", { ascending: false })
+    .limit(10);
+
   const publicaciones = await supabase
     .from("publicación")
     .select(
       `id, creado_en, titulo, contenido, actualizado_en, id_imagen(enlace)`
     )
+    .order("creado_en", { ascending: false })
     .limit(10);
   const imagenProducto = await supabase
     .from("imagen_producto")
