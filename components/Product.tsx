@@ -3,7 +3,7 @@ import styles from "../styles/Product.module.css";
 
 const Product = ({ image, title, price, id }: any) => {
   return (
-    <Link href={"/products/" + id}>
+    <Link href={"/productos/" + id}>
     <div className={styles.container}>
       <picture className={styles.image}>
         <source srcSet={image} width="200" height="200" />

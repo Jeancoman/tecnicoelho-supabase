@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
-    const path = req.body?.table === "producto" ? "products" : "blog";
+    const path = req.body?.table === "producto" ? "productos" : "publicaciones";
 
     console.log(req.body);
 

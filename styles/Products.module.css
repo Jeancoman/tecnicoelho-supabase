@@ -1,10 +1,58 @@
 .products {
-  margin-top: 50px;
-  margin-bottom: 50px;
   display: grid;
-  grid-template-columns: 2fr 8fr;
+  grid-template-columns: 2fr 6fr;
   gap: 40px;
   place-content: center;
+  min-height: 505px;
+  padding: 50px 0px;
+}
+
+.loader-container {
+  min-height: 380px;
+  display: grid;
+  place-content: center;
+  width: 800px;
+}
+
+.not-found {
+  min-height: 380px;
+  width: 800px;
+  color: var(--main-color)
+}
+
+.not-found h2 {
+  font-family: "Open Sans";
+  text-align: center;
+}
+
+.not-found h3 {
+  text-align: center;
+}
+
+.pagination {
+  margin-top: 40px;
+  display: flex;
+  gap: 10px;
+}
+
+.pagination button {
+  font-family: "Open Sans";
+  background-color: var(--main-color);
+  padding: 8px 10px;
+  font-weight: 700;
+  color: white;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pagination button:hover {
+  background-color: #1182d5;
+}
+
+.pagination button:disabled {
+  background-color: #b1daf9;
+  cursor: default;
 }
 
 .left-container input[name="search_bar"] {

@@ -52,7 +52,7 @@ const NewForm = () => {
           },
         });
 
-        router.push("/admin/products/");
+        router.push("/admin/productos/");
       }
     } else {
       toast.error("Error al crear producto.", {

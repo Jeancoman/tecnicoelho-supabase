@@ -12,7 +12,7 @@ const BlogFeed = ({ fecha, imagen, contenido, titulo, id }: any) => {
       </div>
       <div className={styles.preview}>
         <div className={styles.fecha}>{fecha.slice(0, 10)}</div>
-        <Link href={"/blog/" + id}>
+        <Link href={"/publicaciones/" + id}>
         <p className={styles.titulo}>{titulo}</p>
         </Link>
       </div>

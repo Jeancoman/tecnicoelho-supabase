@@ -45,23 +45,3 @@
   border: 0;
 }
 
-@media (max-width: 400px) {
-  .container {
-    width: 150px;
-    height: 200px;
-  }
-
-  .image img {
-    width: 150px;
-    height: 150px;
-  }
-
-  .information {
-    padding: 2px 4px;
-  }
-  
-  .container .title, .price {
-    font-size: 8px;
-    font-weight: 600;
-  }
-}

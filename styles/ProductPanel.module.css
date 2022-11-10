@@ -63,7 +63,7 @@
 }
 
 .data div:last-of-type button {
-  padding: 2px 5px;
+  padding: 4px 6px;
   font-weight: 600;
   cursor: pointer;
 }

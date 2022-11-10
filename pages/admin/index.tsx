@@ -16,7 +16,7 @@ const Admin: NextPage = () => {
 export const getServerSideProps = withPageAuth({
   redirectTo: "/admin/login",
   async getServerSideProps() {
-    return { props: {}, redirect: { destination: "/admin/posts" } };
+    return { props: {}, redirect: { destination: "/admin/publicaciones" } };
   },
 });
 

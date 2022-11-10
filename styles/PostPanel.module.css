@@ -40,6 +40,7 @@
 .data {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  justify-content: center;
   margin-top: 10px;
 }
 
@@ -57,11 +58,12 @@
 
 .data div:last-of-type {
   display: flex;
+  justify-content: center;
   gap: 10px;
 }
 
 .data div:last-of-type button {
-  padding: 2px 5px;
+  padding: 4px 6px;
   font-weight: 600;
   cursor: pointer;
 }

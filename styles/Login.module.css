@@ -1,51 +1,55 @@
 .login-form form {
-    display: flex;
-    flex-direction: column;
-    font-family: "Open Sans";
-    gap: 20px;
-    padding: 30px 20px;
-  }
-  
-  .login-form {
-    width: 440px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.3);
-    display: grid;
-    place-items: center;
-    margin: 50px 0px;
-  }
-  
-  .login-form input {
-    padding: 8px;
-    border-radius: 5px;
-    border: 2px solid rgb(220, 220, 220);
-    outline-color: var(--main-color);
-    width: 360px;
-    font-size: 15px;
-    font-weight: 600;
-  }
-  
-  .login-form button {
-    background-color: var(--main-color);
-    padding: 10px 5px;
-    border-radius: 5px;
-    color: white;
-    font-weight: 600;
-    border: 0;
-    cursor: pointer;
-    width: 360px;
-  }
-  
-  .login-form button:hover {
-      background-color: #1077c2;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  font-family: "Open Sans";
+  gap: 20px;
+  padding: 30px 20px;
+}
+
+.login-form {
+  width: 440px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.3);
+  display: grid;
+  place-items: center;
+  margin: 50px 0px;
+}
+
+.login-form input {
+  padding: 8px;
+  border-radius: 5px;
+  border: 2px solid rgb(220, 220, 220);
+  outline-color: var(--main-color);
+  width: 360px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.login-form button {
+  background-color: var(--main-color);
+  padding: 10px 5px;
+  border-radius: 5px;
+  color: white;
+  font-weight: 600;
+  border: 0;
+  cursor: pointer;
+  width: 360px;
+}
+
+.login-form button:hover {
+  background-color: #1077c2;
+}
+
+.login-form button:disabled {
+  background-color: #b1daf9;
+  cursor: default;
+}
 
 .main {
-    display:grid;
-    height: 508px;
-    place-content: center;
+  display: grid;
+  height: 508px;
+  place-content: center;
 }

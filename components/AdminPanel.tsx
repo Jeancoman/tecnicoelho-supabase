@@ -8,19 +8,21 @@ const AdminPanel = () => {
   const router = useRouter();
 
   const onClick = async () => {
-    const error = await supabase.auth.signOut();
-    router.push("/")
+    const { error } = await supabase.auth.signOut();
+    const expires = new Date(0).toUTCString()
+    document.cookie = `supabase-auth-token=; path=/; expires=${expires}; SameSite=Lax; secure`
+    router.push("/");
   }
 
   return (
     <aside className={styles.dashboard}>
       <div>
         <div className={styles.container}>
-          <Link href={"/admin/posts"}>
+          <Link href={"/admin/publicaciones"}>
             <div
               className={cn({
-                [styles.icon]: !(router.pathname === "/admin/posts"),
-                [styles["icon"] + " " + styles["active"]]: router.pathname === "/admin/posts",
+                [styles.icon]: !(router.pathname === "/admin/publicaciones"),
+                [styles["icon"] + " " + styles["active"]]: router.pathname === "/admin/publicaciones",
               })}
             >
               <div>
@@ -36,10 +38,10 @@ const AdminPanel = () => {
               <p>Publicaciones</p>
             </div>
           </Link>
-          <Link href={"/admin/products"}>
+          <Link href={"/admin/productos"}>
             <div className={cn({
-                [styles.icon]: !(router.pathname === "/admin/products"),
-                [styles["icon"] + " " + styles["active"]]: router.pathname === "/admin/products",
+                [styles.icon]: !(router.pathname === "/admin/productos"),
+                [styles["icon"] + " " + styles["active"]]: router.pathname === "/admin/productos",
               })}>
               <div>
                 <picture>
@@ -54,8 +56,11 @@ const AdminPanel = () => {
               <p>Productos</p>
             </div>
           </Link>
-          <Link href={"/admin/products"}>
-            <div className={styles.icon}>
+          <Link href={"/admin/galeria"}>
+            <div className={cn({
+                [styles.icon]: !(router.pathname === "/admin/galeria"),
+                [styles["icon"] + " " + styles["active"]]: router.pathname === "/admin/galeria",
+              })}>
               <div>
                 <picture>
                   <source srcSet="/images.svg" type="image/svg" />

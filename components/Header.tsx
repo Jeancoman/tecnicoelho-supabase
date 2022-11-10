@@ -33,12 +33,12 @@ const Header = () => {
               <a className={styles.a}>Inicio</a>
             </li>
           </Link>
-          <Link href={"/products"}>
+          <Link href={"/productos"}>
             <li className={styles.li}>
               <a className={styles.a}>Productos</a>
             </li>
           </Link>
-          <Link href={"/about"}>
+          <Link href={"/nosotros"}>
             <li className={styles.li}>
               <a className={styles.a}>Nosotros</a>
             </li>
@@ -48,12 +48,12 @@ const Header = () => {
               <a className={styles.a}>Galería</a>
             </li>
           </Link>
-          <Link href={"/blog"}>
+          <Link href={"/publicaciones"}>
             <li className={styles.li}>
               <a className={styles.a}>Publicaciones</a>
             </li>
           </Link>
-          <Link href={"/contact"}>
+          <Link href={"/contacto"}>
             <li className={styles.li}>
               <a className={styles.a}>Contacto</a>
             </li>

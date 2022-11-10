@@ -94,10 +94,10 @@ const ProductosPage: NextPage = () => {
           <AdminPanel />
           {!editing && (
             <button
-              onClick={() => router.push("/admin/products/crear")}
+              onClick={() => router.push("/admin/productos/crear")}
               className={styles["new-button"]}
             >
-              Nuevo producto
+              Añadir producto
             </button>
           )}
         </div>

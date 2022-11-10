@@ -22,20 +22,20 @@ const NewForm: NextPage = () => {
       .select()
       .single();
 
-    if (!!data) {
+    if (data) {
       const createPost = await supabase
         .from("publicación")
         .insert({ titulo: titulo, contenido: contenido, id_imagen: data.id })
         .select()
         .single();
 
-      if (!!createPost.data) {
+      if (createPost.data) {
         toast.success("Publicación creada con exito", {
           style: {
             fontFamily: "Open Sans",
           },
         });
-        router.push("/admin/posts");
+        router.push("/admin/publicaciones");
       }
     } else if (error) {
       toast.error("Error al crear publicación.", {
