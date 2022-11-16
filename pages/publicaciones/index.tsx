@@ -1,4 +1,4 @@
-import type { GetServerSideProps, NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import BlogFeed from "../../components/BlogFeed";
 import { supabase } from "../../utilities/supabaseClient";
@@ -29,7 +29,7 @@ const Blog: NextPage = ({ data }: any) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const publicaciones = await supabase
     .from("publicación")
     .select(
@@ -42,8 +42,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
       id_imagen: publicacion.id_imagen.enlace,
     };
   });
-
-  console.log(post);
 
   return {
     props: {

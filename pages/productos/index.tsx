@@ -1,4 +1,4 @@
-import type { GetServerSideProps, NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import styles from "/styles/Products.module.css";
 import Product from "../../components/Product";
 import { supabase } from "../../utilities/supabaseClient";
@@ -237,7 +237,7 @@ const Products: NextPage = ({ data }: any) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const producto = await supabase
     .from("producto")
     .select()

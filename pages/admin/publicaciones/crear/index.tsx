@@ -16,29 +16,35 @@ const NewForm: NextPage = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const { data, error } = await supabase
-      .from("imagen")
-      .insert({ enlace: imagen })
-      .select()
-      .single();
-
-    if (data) {
-      const createPost = await supabase
-        .from("publicación")
-        .insert({ titulo: titulo, contenido: contenido, id_imagen: data.id })
+    try {
+      const { data, error } = await supabase
+        .from("imagen")
+        .insert({ enlace: imagen })
         .select()
         .single();
 
-      if (createPost.data) {
-        toast.success("Publicación creada con exito", {
-          style: {
-            fontFamily: "Open Sans",
-          },
-        });
-        router.push("/admin/publicaciones");
+      if (error) {
+        throw new Error("Error al crear portada.");
+      } else {
+        const { error } = await supabase
+          .from("publicación")
+          .insert({ titulo: titulo, contenido: contenido, id_imagen: data.id })
+          .select()
+          .single();
+
+        if (error) {
+          throw new Error("Error al crear publicación.");
+        } else {
+          toast.success("Publicación creada exitosamente.", {
+            style: {
+              fontFamily: "Open Sans",
+            },
+          });
+          router.push("/admin/publicaciones");
+        }
       }
-    } else if (error) {
-      toast.error("Error al crear publicación.", {
+    } catch (e: any) {
+      toast.error(e.message, {
         style: {
           fontFamily: "Open Sans",
         },
@@ -54,17 +60,28 @@ const NewForm: NextPage = () => {
       </Head>
       <h2>Nueva Publicación</h2>
       <form onSubmit={handleSubmit}>
-        <input type="text" onChange={(e) => setTitulo(e.target.value)} placeholder="Titulo" />
-        <input type="text" onChange={(e) => setImagen(e.target.value)} placeholder="Enlace de portada" />
-        <textarea onChange={(e) => setContenido(e.target.value)} placeholder="Escribe tu publicación..."></textarea>
+        <input
+          type="text"
+          onChange={(e) => setTitulo(e.target.value)}
+          placeholder="Titulo"
+        />
+        <input
+          type="text"
+          onChange={(e) => setImagen(e.target.value)}
+          placeholder="Enlace de portada"
+        />
+        <textarea
+          onChange={(e) => setContenido(e.target.value)}
+          placeholder="Escribe tu publicación..."
+        ></textarea>
         <div className={styles.buttons}>
           <button type="submit" className={styles.button}>
-            Crear
+            Crear publicación
           </button>
           <button
             type="button"
             className={styles.button}
-            onClick={() => router.push("/admin/posts")}
+            onClick={() => router.push("/admin/publicaciones")}
           >
             Volver
           </button>

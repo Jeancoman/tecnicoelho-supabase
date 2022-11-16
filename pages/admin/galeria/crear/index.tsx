@@ -15,28 +15,32 @@ const NewForm: NextPage = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const { data, error } = await supabase
-      .from("imagen")
-      .insert({ enlace: imagen })
-      .select()
-      .single();
-
-    if (data) {
-      const createPost = await supabase
-        .from("imagen_descripción")
-        .insert({ texto: texto, id_imagen: data.id })
+    try {
+      const { data, error } = await supabase
+        .from("imagen")
+        .insert({ enlace: imagen })
         .select()
         .single();
-
-      if (createPost.data) {
-        toast.success("Imagen añadida a la galería", {
-          style: {
-            fontFamily: "Open Sans",
-          },
-        });
-        router.push("/admin/galeria");
+      if (error) {
+        throw new Error("Error al crear imagen.");
+      } else {
+        const { error } = await supabase
+          .from("imagen_descripción")
+          .insert({ texto: texto, id_imagen: data.id })
+          .select()
+          .single();
+        if (error) {
+          throw new Error("Error al crear descripción de la imagen.");
+        } else {
+          toast.success("Imagen añadida a la galería", {
+            style: {
+              fontFamily: "Open Sans",
+            },
+          });
+          router.push("/admin/galeria");
+        }
       }
-    } else if (error) {
+    } catch {
       toast.error("Error al añadir imagen a la galería", {
         style: {
           fontFamily: "Open Sans",
@@ -53,11 +57,18 @@ const NewForm: NextPage = () => {
       </Head>
       <h2>Nueva imagen</h2>
       <form onSubmit={handleSubmit}>
-        <input type="text" onChange={(e) => setImagen(e.target.value)} placeholder="Enlace de imagen" />
-        <textarea onChange={(e) => setTexto(e.target.value)} placeholder="Descripción de la imagen..."></textarea>
+        <input
+          type="text"
+          onChange={(e) => setImagen(e.target.value)}
+          placeholder="Enlace de imagen"
+        />
+        <textarea
+          onChange={(e) => setTexto(e.target.value)}
+          placeholder="Descripción de la imagen..."
+        ></textarea>
         <div className={styles.buttons}>
           <button type="submit" className={styles.button}>
-            Crear
+            Crear nueva imagen
           </button>
           <button
             type="button"

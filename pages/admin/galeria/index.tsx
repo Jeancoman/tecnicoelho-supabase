@@ -29,9 +29,6 @@ const Galeria: NextPage = () => {
           enlace: data?.id_imagen.enlace,
         };
       });
-
-      console.log(mapped);
-
       setData(mapped);
     }
 
@@ -48,14 +45,35 @@ const Galeria: NextPage = () => {
   };
 
   const deleteBtn = async (id: any) => {
-    const eliminandoDescripcion = await supabase
-      .from("imagen_descripción")
-      .delete()
-      .eq("id_imagen", id);
+    try {
+      const { error } = await supabase
+        .from("imagen_descripción")
+        .delete()
+        .eq("id_imagen", id);
 
-    const deletingImg = await supabase.from("imagen").delete().eq("id", id);
+      if (error) {
+        throw new Error("Error al actualizar descripción.");
+      } else {
+        const { error } = await supabase.from("imagen").delete().eq("id", id);
 
-    setData(undefined);
+        if (error) {
+          throw new Error("Error al actualizar imagen.");
+        } else {
+          toast.success("Imagen actualizada exitosamente.", {
+            style: {
+              fontFamily: "Open Sans",
+            },
+          });
+          setData(undefined);
+        }
+      }
+    } catch (e: any) {
+      toast.error(e.message, {
+        style: {
+          fontFamily: "Open Sans",
+        },
+      });
+    }
   };
 
   return (
@@ -129,26 +147,39 @@ const EditForm = ({ data, set, value, setData }: any) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const updatePost = await supabase
-      .from("imagen_descripción")
-      .update({ texto: texto })
-      .eq("id_imagen", data.id_imagen);
 
-    console.log(data.id_imagen);
+    try {
+      const { error } = await supabase
+        .from("imagen_descripción")
+        .update({ texto: texto })
+        .eq("id_imagen", data.id_imagen);
 
-    const updateImagenPost = await supabase
-      .from("imagen")
-      .update({ enlace: imagen })
-      .eq("id", data.id_imagen);
-
-    toast.success("Producto actualizado", {
-      style: {
-        fontFamily: "Open Sans",
-      },
-    });
-
-    setData(undefined);
-    set(!value);
+      if (error) {
+        throw new Error("Error al actualizar descripción.");
+      } else {
+        const { error } = await supabase
+          .from("imagen")
+          .update({ enlace: imagen })
+          .eq("id", data.id_imagen);
+        if (error) {
+          throw new Error("Error al actualizar imagen.");
+        } else {
+          toast.success("Imagen actualizada exitosamente.", {
+            style: {
+              fontFamily: "Open Sans",
+            },
+          });
+          setData(undefined);
+          set(!value);
+        }
+      }
+    } catch (e: any) {
+      toast.error(e.message, {
+        style: {
+          fontFamily: "Open Sans",
+        },
+      });
+    }
   };
 
   return (

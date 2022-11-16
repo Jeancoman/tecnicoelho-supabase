@@ -1,5 +1,5 @@
 import useEmblaCarousel from "embla-carousel-react";
-import type { GetServerSideProps, NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import { useCallback } from "react";
 import BlogFeed from "../components/BlogFeedHome";
@@ -199,34 +199,7 @@ const Home: NextPage = ({ data, posts }: any) => {
   );
 };
 
-/* export async function getServerSideProps() {
-  const db = getFirestore(firebaseApp);
-  let q = query(
-    collection(db, "productos"),
-    orderBy("fecha_creacion"),
-    limit(10)
-  );
-  let querySnapshot = await getDocs(q);
-  const data = querySnapshot.docs.map(postToJSON);
-
-  q = query(
-    collection(db, "publicaciones"),
-    orderBy("fecha_creacion"),
-    limit(10)
-  );
-  querySnapshot = await getDocs(q);
-  const posts = querySnapshot.docs.map(postToJSON);
-  console.log(posts);
-
-  return {
-    props: {
-      data,
-      posts,
-    },
-  };
-} */
-
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const producto = await supabase
     .from("producto")
     .select()

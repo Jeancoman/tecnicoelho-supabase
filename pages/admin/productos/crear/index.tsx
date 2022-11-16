@@ -18,44 +18,54 @@ const NewForm = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    try {
+      const { data, error } = await supabase
+        .from("imagen")
+        .insert(imagenes)
+        .select();
 
-    const inserting = await supabase.from("imagen").insert(imagenes).select();
-
-    if (inserting?.status >= 200 && inserting?.status <= 299) {
-      const producto = await supabase
-        .from("producto")
-        .insert({
-          nombre: nombre,
-          precio: Number(precio),
-          descripción: descripcion,
-        })
-        .select()
-        .single();
-
-      const filtered = inserting?.data?.map((d) => {
-        return {
-          id_imagen: d.id,
-          id_producto: producto.data.id,
-        };
-      });
-
-      if (producto?.status >= 200 && producto?.status <= 299) {
-        const imagenProducto = await supabase
-          .from("imagen_producto")
-          .insert(filtered)
+      if (error) {
+        throw new Error("Error al crear imagenes.");
+      } else {
+        const producto = await supabase
+          .from("producto")
+          .insert({
+            nombre: nombre,
+            precio: Number(precio),
+            descripción: descripcion,
+          })
           .select()
           .single();
 
-        toast.success("Produco creado exitosamente.", {
-          style: {
-            fontFamily: "Open Sans",
-          },
+        const mapped = data?.map((d) => {
+          return {
+            id_imagen: d.id,
+            id_producto: producto.data.id,
+          };
         });
 
-        router.push("/admin/productos/");
+        if (producto.error) {
+          throw new Error("Error al crear producto.");
+        } else {
+          const { error } = await supabase
+            .from("imagen_producto")
+            .insert(mapped)
+            .select()
+            .single();
+          if (error) {
+            throw new Error("Error al relacionar imagenes con el producto.");
+          } else {
+            toast.success("Produco creado exitosamente.", {
+              style: {
+                fontFamily: "Open Sans",
+              },
+            });
+            router.push("/admin/productos/");
+          }
+        }
       }
-    } else {
-      toast.error("Error al crear producto.", {
+    } catch (e: any) {
+      toast.error(e.message, {
         style: {
           fontFamily: "Open Sans",
         },
@@ -134,12 +144,12 @@ const NewForm = () => {
         ></textarea>
         <div className={styles.buttons}>
           <button type="submit" className={styles.button}>
-            Guardar cambios
+            Crear nuevo producto
           </button>
           <button
             type="button"
             className={styles.button}
-            onClick={() => router.push("/admin/products")}
+            onClick={() => router.push("/admin/productos")}
           >
             Volver
           </button>

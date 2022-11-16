@@ -58,38 +58,77 @@ const ProductosPage: NextPage = () => {
   };
 
   const deleteBtn = async (id: any, imagenes: any) => {
-    const deleting = await supabase
-      .from("producto")
-      .delete()
-      .eq("id", id)
-      .select();
+    try {
+      try {
+        imagenes?.forEach(async (img: any) => {
+          const { error } = await supabase
+            .from("imagen_producto")
+            .delete()
+            .eq("id_imagen", img.id);
 
-    console.log(deleting);
+          if (error) {
+            throw new Error("");
+          }
+        });
+      } catch {
+        throw new Error(
+          "Error al eliminar relaciones entre las imagenes y el producto."
+        );
+      }
 
-    imagenes?.forEach(async (img: any) => {
-      const deleting = await supabase
-        .from("imagen_producto")
-        .delete()
-        .eq("id_imagen", img.id);
-    });
+      try {
+        imagenes?.forEach(async (img: any) => {
+          const { error } = await supabase
+            .from("imagen")
+            .delete()
+            .eq("id", img.id);
+          if (error) {
+            throw new Error("");
+          }
+        });
+      } catch {
+        throw new Error("Error al eliminar las imagenes del producto.");
+      }
 
-    imagenes?.forEach(async (img: any) => {
-      const deleting = await supabase
-        .from("imagen")
-        .delete()
-        .eq("imagen", img.id);
-    });
+      try {
+        const { error } = await supabase
+          .from("producto")
+          .delete()
+          .eq("id", id)
+          .select();
 
-    setData(undefined);
+        if (error) {
+          throw new Error("");
+        } else {
+          toast.success("Producto eliminado exitosamente.", {
+            style: {
+              fontFamily: "Open Sans",
+            },
+          });
+          setData(undefined);
+        }
+      } catch {
+        throw new Error("Error al eliminar el producto.");
+      }
+    } catch (e: any) {
+      toast.error(e.message, {
+        style: {
+          fontFamily: "Open Sans",
+        },
+      });
+    }
   };
 
   return (
     <>
       <div className={styles.container}>
-      <Head>
-        <title>Panel de Control</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      </Head>
+        <Head>
+          <title>Panel de Control</title>
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+        </Head>
         <div>
           <AdminPanel />
           {!editing && (
@@ -136,7 +175,12 @@ const ProductosPage: NextPage = () => {
           </div>
         )}
         {editing && (
-          <EditForm producto={toEdit} set={setEditing} value={editing} setData={setData} />
+          <EditForm
+            producto={toEdit}
+            set={setEditing}
+            value={editing}
+            setData={setData}
+          />
         )}
         <Toaster />
       </div>
@@ -152,81 +196,99 @@ const EditForm = ({ producto, set, value, setData }: any) => {
     producto.imagenes
   );
   const [eliminar, setEliminar] = useState<any[]>([]);
-  const [error, setError] = useState(false);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    eliminar?.forEach(async (id) => {
-      const deleting = await supabase
-        .from("imagen_producto")
-        .delete()
-        .eq("id_imagen", id)
-        .select();
+    try {
+      try {
+        eliminar?.forEach(async (id) => {
+          const { error } = await supabase
+            .from("imagen_producto")
+            .delete()
+            .eq("id_imagen", id);
+          if (error) {
+            throw new Error("");
+          }
+        });
+      } catch (e: any) {
+        throw new Error(
+          "Error al eliminar relaciones entre imagenes y productos."
+        );
+      }
 
-        if(deleting.status > 299){
-          setError(true);
+      eliminar?.forEach(async (id) => {
+        const { error } = await supabase.from("imagen").delete().eq("id", id);
+        if (error) {
+          throw new Error("Error al eliminar imagenes.");
         }
-    });
+      });
 
-    if (error) {
-      toast.error("Error al actualizar producto.", {
+      imagenes?.forEach(async (img, index) => {
+        if (img.hasOwnProperty("id")) {
+          const { error } = await supabase
+            .from("imagen")
+            .update({ enlace: img.imagen })
+            .eq("id", img.id)
+            .select()
+            .single();
+
+          if (error) {
+            throw new Error("Error al actualizar imagenes.");
+          }
+        } else {
+          const { data, error } = await supabase
+            .from("imagen")
+            .insert({ enlace: img.imagen })
+            .select()
+            .single();
+
+          if (error) {
+            throw new Error("Error al añadir nuevas imagenes.");
+          } else {
+            const { error } = await supabase
+              .from("imagen_producto")
+              .insert({
+                id_imagen: data.id,
+                id_producto: producto.id,
+              })
+              .select();
+            if (error) {
+              throw new Error("Error al relacionar imagenes y productos.");
+            }
+          }
+        }
+
+        if (index === imagenes.length - 1) {
+          const { error } = await supabase
+            .from("producto")
+            .update({
+              nombre: nombre,
+              precio: Number(precio),
+              descripción: descripcion,
+            })
+            .eq("id", producto.id);
+
+          if (error) {
+            throw new Error("Error al actualizar producto.");
+          } else {
+            toast.success("Producto actualizado exitosamente.", {
+              style: {
+                fontFamily: "Open Sans",
+              },
+            });
+            setData(undefined);
+            set(!value);
+          }
+        }
+      });
+    } catch (e: any) {
+      toast.error(e.message, {
         style: {
           fontFamily: "Open Sans",
         },
       });
-    } else {
-      eliminar?.forEach(async (id) => {
-        const deleting = await supabase
-          .from("imagen")
-          .delete()
-          .eq("id", id)
-          .select();
-      });
     }
-
-    imagenes.forEach(async (img, index) => {
-      if (img.hasOwnProperty("id")) {
-        const updating = await supabase
-          .from("imagen")
-          .update({ enlace: img.imagen })
-          .eq("id", img.id)
-          .select()
-          .single();
-      } else {
-        const inserting = await supabase
-          .from("imagen")
-          .insert({ enlace: img.imagen })
-          .select()
-          .single();
-
-        if (inserting.status >= 200 && inserting.status <= 299) {
-          const insertingIP = await supabase
-            .from("imagen_producto")
-            .insert({ id_imagen: inserting.data.id, id_producto: producto.id })
-            .select();
-        }
-      }
-
-      if(index === imagenes.length - 1 ){
-        toast.success("Producto actualizado", {
-          style: {
-            fontFamily: "Open Sans",
-          },
-        });
-        setData(undefined);
-        set(!value)
-      }
-    });
-
-    const updating = await supabase
-      .from("producto")
-      .update({
-        nombre: nombre,
-        precio: Number(precio),
-        descripción: descripcion,
-      })
-      .eq("id", producto.id);
   };
 
   const handleChange = (index: any, event: any) => {

@@ -62,10 +62,13 @@ const Posts: NextPage = () => {
   return (
     <>
       <div className={styles.container}>
-      <Head>
-        <title>Panel de Control</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      </Head>
+        <Head>
+          <title>Panel de Control</title>
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+        </Head>
         <div>
           <AdminPanel />
           <button
@@ -109,7 +112,14 @@ const Posts: NextPage = () => {
             )}
           </div>
         )}
-        {editing && <EditForm data={toEdit} set={setEditing} value={editing} setData={setData} />}
+        {editing && (
+          <EditForm
+            data={toEdit}
+            set={setEditing}
+            value={editing}
+            setData={setData}
+          />
+        )}
         <Toaster />
       </div>
     </>
@@ -123,24 +133,42 @@ const EditForm = ({ data, set, value, setData }: any) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const updatePost = await supabase
-      .from("publicación")
-      .update({ titulo: titulo, contenido: contenido })
-      .eq("id", data.id);
 
-    const updateImagenPost = await supabase
-      .from("imagen")
-      .update({ enlace: imagen })
-      .eq("id", data.id_imagen);
+    try {
+      const { error } = await supabase
+        .from("publicación")
+        .update({ titulo: titulo, contenido: contenido })
+        .eq("id", data.id);
 
-      toast.success("Publicación actualizada", {
+      if (error) {
+        throw new Error("Error al actualizar publicación.");
+      } else {
+        const { error } = await supabase
+          .from("imagen")
+          .update({ enlace: imagen })
+          .eq("id", data.id_imagen);
+
+        if (error) {
+          throw new Error(
+            "Error al actualizar portada, pero la publicación fue actualizada."
+          );
+        } else {
+          toast.success("Publicación actualizada exitosamente.", {
+            style: {
+              fontFamily: "Open Sans",
+            },
+          });
+          setData(undefined);
+          set(!value);
+        }
+      }
+    } catch (e: any) {
+      toast.error(e.message, {
         style: {
           fontFamily: "Open Sans",
         },
       });
-
-      setData(undefined);
-      set(!value)
+    }
   };
 
   return (
