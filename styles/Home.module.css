@@ -313,11 +313,11 @@
 }
 
 .prev {
-  left: 10px
+  left: 20px
 }
 
 .next {
-  right: 10px;
+  right: 20px;
 }
 
 .prev:hover, .next:hover {
@@ -374,7 +374,14 @@
 @media only screen and (min-width: 768px) {}
 
 /* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {}
+@media only screen and (min-width: 992px) {
+  .service:nth-of-type(4){
+    margin-left: 25rem;
+  }
+  .service:nth-of-type(5){
+    margin-left: 25rem;
+  }
+}
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {}

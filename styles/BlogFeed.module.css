@@ -8,6 +8,8 @@
   height: 300px;
 }
 .container img {
+    height: 250px;
+    width: 380px;
   border-radius: 5px;
   cursor: pointer;
 }
@@ -15,7 +17,7 @@
 .container div:first-of-type picture {
   object-fit: contain;
   width: 400px;
-  height: 400px;
+  height: 200px;
   display: grid;
   place-items: center;
 }

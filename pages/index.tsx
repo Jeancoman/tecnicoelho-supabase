@@ -30,6 +30,11 @@ const Home: NextPage = ({ data, posts }: any) => {
     if (emblaApiTwo) emblaApiTwo.scrollNext();
   }, [emblaApiTwo]);
 
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+
   return (
     <main className={styles.main}>
       <Head>
@@ -142,7 +147,7 @@ const Home: NextPage = ({ data, posts }: any) => {
                     <div className={styles["embla__slide"]} key={data?.id}>
                       <Product
                         title={data?.nombre}
-                        price={data?.precio}
+                        price={formatter.format(data?.precio)}
                         image={data?.imagenes[0]}
                         id={data?.id}
                         key={data?.id}

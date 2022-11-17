@@ -30,8 +30,9 @@ const About: NextPage = () => {
             diversas áreas con las cuales ampliar sus servicios. Actualmente,
             TecniCoelho brinda servicios de reparación y soporte técnico a
             empresas y particulares, instalación, mantenimiento y configuración
-            de redes informáticas, servicios de Community Manager y,
-            próximamente, servicios de diseño gráfico.
+            de redes informáticas, venta de productos tecnológicos y componentes
+            para computadora, compras por encargo, servicios de Community
+            Manager y, próximamente, servicios de diseño gráfico.
           </p>
         </div>
         <div className={styles.center}>
@@ -39,14 +40,14 @@ const About: NextPage = () => {
             <h2>Misión</h2>
             <p>
               Prestar servicios de reparación, instalación, mantenimiento y
-              venta de equipo y software en el area de Informática
+              venta de equipo y software en el area de Informática.
             </p>
           </div>
           <div className={styles.vision}>
             <h2>Visión</h2>
             <p>
               Ser un punto de referencia de calidad en servicios y ventas de
-              equipos o software en área de Informática a nivel nacional
+              equipos o software en área de Informática a nivel nacional.
             </p>
           </div>
         </div>
@@ -59,6 +60,14 @@ const About: NextPage = () => {
               referrerPolicy="no-referrer"
             />
           </picture>
+        </div>
+        <div className={styles.bottom}>
+          <div className={styles["bottom-border"]}>
+            <h2>Sitio web desarrollado por</h2>
+            <p>
+              Jean Bolívar y Jesús Enrique Filipino.
+            </p>
+          </div>
         </div>
       </div>
     </main>

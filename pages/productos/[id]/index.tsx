@@ -18,6 +18,11 @@ const ProductPage: NextPage = ({ data }: any) => {
     setActualImage(img);
   };
 
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
+
   return (
     <main className={styles.product}>
       <Head>
@@ -50,7 +55,7 @@ const ProductPage: NextPage = ({ data }: any) => {
           <div className={styles["product-info"]}>
             <h3>{data?.nombre}</h3>
             <div className={styles.price}>
-              Precio unitario de <span>${data?.precio} USD</span>
+              Precio unitario de <span>{formatter.format(data?.precio)} USD</span>
             </div>
             <button className={styles.button} onClick={handleShow}>
               Contáctanos por email

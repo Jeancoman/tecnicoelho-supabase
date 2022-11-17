@@ -4,6 +4,7 @@
     display: grid;
     place-items: center;
     font-family: "Open Sans";
+    min-height: 80vh;
 }
 
 .container {

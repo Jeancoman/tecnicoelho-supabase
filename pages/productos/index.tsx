@@ -57,8 +57,6 @@ const Products: NextPage = ({ data }: any) => {
             config: "english",
           });
 
-        console.log(searchFor);
-
         const imagenProducto = await supabase
           .from("imagen_producto")
           .select(`id_producto, id_imagen(enlace)`);
@@ -89,8 +87,6 @@ const Products: NextPage = ({ data }: any) => {
           setNotFound(false);
           setPaginating(false);
           setShow(false);
-
-          console.log("if second trie");
         }
       } else {
         const imagenProducto = await supabase
@@ -117,7 +113,6 @@ const Products: NextPage = ({ data }: any) => {
         setNotFound(false);
         setPaginating(false);
         setShow(false);
-        console.log("if first trie");
       }
     }, 1000),
     []
@@ -155,9 +150,13 @@ const Products: NextPage = ({ data }: any) => {
     setNotFound(false);
     setSearching(false);
     setShow(true);
-    console.log("fetching");
     mapped?.length < 9 ? setProductsEnd(true) : null;
   };
+
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
 
   useEffect(() => {
     if (searching && searchInput.length > 0) {
@@ -204,7 +203,7 @@ const Products: NextPage = ({ data }: any) => {
             return (
               <Product
                 title={data?.nombre}
-                price={data?.precio}
+                price={formatter.format(data?.precio)}
                 image={data?.imagenes[0]}
                 id={data?.id}
                 key={data?.id}

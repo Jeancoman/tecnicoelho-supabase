@@ -3,7 +3,7 @@
   grid-template-columns: 2fr 6fr;
   gap: 40px;
   place-content: center;
-  min-height: 505px;
+  min-height: 85vh;
   padding: 50px 0px;
 }
 

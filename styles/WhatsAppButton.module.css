@@ -15,8 +15,8 @@
 }
 
 .whatsapp-icon {
-  margin-top: 10px;
-  margin-left: 2px;
+  margin-top: 11px;
+  margin-left: 4px;
 }
 
 .whatsapp_float:hover {
@@ -26,8 +26,8 @@
 
 
 .whatsapp-icon img{
-    max-width: 38px;
-    max-height: 38px;
+    max-width: 36px;
+    max-height: 36px;
     margin: auto;
     filter: invert(100%) sepia(10%) saturate(7460%) hue-rotate(273deg) brightness(118%) contrast(108%);
   }

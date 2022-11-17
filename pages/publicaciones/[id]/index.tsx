@@ -23,7 +23,7 @@ const Post: NextPage = ({ data }: any) => {
           </picture>
         </div>
         <div className={styles.preview}>
-          <div className={styles.fecha}>{data?.creado_en.slice(0, 10)}</div>
+          <div className={styles.fecha}>Fecha de creación: {data?.creado_en.slice(0, 10)}</div>
           <div className={styles.titulo}>{data?.titulo}</div>
           <p className={styles.contenido}>{data?.contenido}</p>
         </div>

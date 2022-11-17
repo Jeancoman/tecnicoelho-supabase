@@ -6,7 +6,7 @@ sendgrid.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY!);
 async function sendEmail(req: NextApiRequest, res: NextApiResponse) {
 
   await sendgrid.send({
-    to: "jeanfranbg@gmail.com",
+    to: "jeanbolivar@proton.me",
     from: "tecnicoelhocliente@gmail.com",
     subject: `${req.body.asunto}`,
     text: `${req.body.mensaje}`,
