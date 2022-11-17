@@ -67,7 +67,7 @@ const Contact: NextPage = () => {
           <div className={styles.left}>
             <h3>Ubicanos en</h3>
             <div className={styles.text}>
-              <p>Galegia Giusseppe</p>
+              <p>Calle Descanso</p>
               <p>Calle Retumbo</p>
               <p>Valle de la Pascua</p>
               <p>2350</p>
