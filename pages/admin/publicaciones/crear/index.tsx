@@ -79,7 +79,7 @@ const NewForm: NextPage = () => {
         ></textarea>
         <div className={styles.buttons}>
           <button type="submit" className={styles.button}>
-            Crear publicación
+            Añadir publicación
           </button>
           <button
             type="button"

@@ -149,7 +149,7 @@ const NewForm = () => {
         ></textarea>
         <div className={styles.buttons}>
           <button type="submit" className={styles.button}>
-            Crear nuevo producto
+            Añadir producto
           </button>
           <button
             type="button"
