@@ -326,20 +326,24 @@ const EditForm = ({ producto, set, value, setData }: any) => {
           type="text"
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
+          required
         />
         <input
           type="text"
           value={precio}
           onChange={(e) => setPrecio(e.target.value)}
+          required
         />
         {imagenes.map((input, index) => {
           return (
             <div key={index} className={styles["image-form"]}>
               <input
+                type="url"
                 name="imagen"
-                placeholder="Imagen"
+                placeholder="http://www.enlaceaimagen.com"
                 value={input.imagen}
                 onChange={(e) => handleChange(index, e)}
+                required
               />
               {index > 0 ? (
                 <span
@@ -358,6 +362,8 @@ const EditForm = ({ producto, set, value, setData }: any) => {
         <textarea
           value={descripcion}
           onChange={(e) => setDescripcion(e.target.value)}
+          placeholder="Descripción del producto..."
+          required
         ></textarea>
         <div className={styles.buttons}>
           <button className={styles.button}>Guardar cambios</button>

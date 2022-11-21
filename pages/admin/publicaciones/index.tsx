@@ -173,21 +173,25 @@ const EditForm = ({ data, set, value, setData }: any) => {
 
   return (
     <div className={styles["edit-form"]}>
-      <h2>{titulo}</h2>
+      <h2>Publicación - {data.id}</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          defaultValue={titulo}
+          value={titulo}
           onChange={(e) => setTitulo(e.target.value)}
+          required
         />
         <input
-          type="text"
-          defaultValue={imagen}
+          type="url"
+          value={imagen}
           onChange={(e) => setImagen(e.target.value)}
+          placeholder="http://www.enlacedeimagen.com"
+          required
         />
         <textarea
-          defaultValue={contenido}
+          value={contenido}
           onChange={(e) => setContenido(e.target.value)}
+          required
         ></textarea>
         <div className={styles.buttons}>
           <button type="submit" className={styles.button}>

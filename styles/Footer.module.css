@@ -12,3 +12,14 @@
     color: #f9faf8;
     
 }
+
+@media(max-width:600px){
+    .footer {
+        display: grid;
+        justify-content: center;
+    }
+
+    .footer p {
+        margin-left: 0px;
+    }
+}

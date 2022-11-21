@@ -226,6 +226,28 @@
 
 }
 
+@media (max-width: 480px){
+  .container img {
+    height: 100px;
+    width: 250px
+  }
+
+  .logo-menu {
+    gap: 30px;
+  }
+}
+
+@media (max-width: 380px){
+  .container img {
+    height: 100px;
+    width: 250px
+  }
+
+  .logo-menu {
+    gap: 20px;
+  }
+}
+
 @media only screen and (min-width: 600px) {}
 
 /* Medium devices (landscape tablets, 768px and up) */

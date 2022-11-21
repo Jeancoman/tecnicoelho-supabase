@@ -58,13 +58,15 @@ const NewForm: NextPage = () => {
       <h2>Nueva imagen</h2>
       <form onSubmit={handleSubmit}>
         <input
-          type="text"
+          type="url"
           onChange={(e) => setImagen(e.target.value)}
-          placeholder="Enlace de imagen"
+          placeholder="http://www.enlacedeimagen.com"
+          required
         />
         <textarea
           onChange={(e) => setTexto(e.target.value)}
           placeholder="Descripción de la imagen..."
+          required
         ></textarea>
         <div className={styles.buttons}>
           <button type="submit" className={styles.button}>

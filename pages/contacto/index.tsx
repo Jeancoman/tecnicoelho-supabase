@@ -145,6 +145,9 @@ const Contact: NextPage = () => {
                 id=""
                 placeholder="Número telefonico"
                 onChange={(e) => setTelefono(e.target.value)}
+                minLength={10}
+                maxLength={11}
+                pattern="[0-9]*"
               />
               <input
                 type="text"

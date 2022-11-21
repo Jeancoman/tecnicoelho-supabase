@@ -186,13 +186,16 @@ const EditForm = ({ data, set, value, setData }: any) => {
     <div className={styles["edit-form"]}>
       <form onSubmit={handleSubmit}>
         <input
-          type="text"
+          type="url"
           value={imagen}
           onChange={(e) => setImagen(e.target.value)}
+          placeholder="http://www.enlacedeimagen.com"
+          required
         />
         <textarea
           value={texto}
           onChange={(e) => setTexto(e.target.value)}
+          required
         ></textarea>
         <div className={styles.buttons}>
           <button type="submit" className={styles.button}>

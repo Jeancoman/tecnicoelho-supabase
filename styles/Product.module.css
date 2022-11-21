@@ -47,3 +47,28 @@
   border: 0;
 }
 
+@media (max-width: 600px){
+  .image img {
+    width: 240px;
+    height: 220px;
+  }
+
+  .container {
+    height: 360px;
+    width: 240px; 
+
+  }
+}
+
+@media (max-width: 480px){
+  .image img {
+    width: 230px;
+    height: 200px;
+  }
+
+  .container {
+    height: 340px;
+    width: 230px; 
+  }
+}
+

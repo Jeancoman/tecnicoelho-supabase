@@ -30,7 +30,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   padding-left: 100px;
-  position: relative
+  position: relative;
 }
 
 .hero-maintext {
@@ -45,7 +45,7 @@
 .hero-subtext {
   word-wrap: break-word;
   width: 700px;
-  font-size: 20px;
+  font-size: 1.2rem;
   color: var(--main-color);
   text-shadow: 2px 2px 0px whitesmoke;
   font-weight: 800;
@@ -121,7 +121,6 @@
   text-align: center;
   gap: 30px;
   padding-bottom: 100px;
-
 }
 
 .line-break {
@@ -166,59 +165,6 @@
 
 /* Testimonial */
 
-/* Call to action */
-
-.call-action {
-  display: flex;
-  height: 300px;
-  align-items: center;
-  justify-content: center;
-  color: #f9faf8;
-  padding: 20px;
-  font-family: "Open Sans";
-}
-
-.call.content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.call-border {
-  display: flex;
-  border: 2px solid #3882f6;
-  border-radius: 8px;
-  padding: 20px 120px;
-  background-color: #3882f6;
-  gap: 175px;
-  justify-content: space-between;
-}
-
-.call-button {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.action-text {
-  color: rgba(249, 250, 248, 0.85);
-}
-
-.button-button {
-  padding: 9px 38px;
-  color: #f9faf8;
-  background-color: #3882f6;
-  font-family: Roboto;
-  font-weight: 700;
-  font-size: 14px;
-  border: 2px solid #f9faf8;
-  border-radius: 8px;
-}
-
-.header-action {
-  margin-bottom: -10px;
-}
-
 .services {
   min-height: 450px;
 }
@@ -227,6 +173,7 @@
   text-align: center;
   font-family: "Open Sans";
 }
+
 .services h1 {
   display: inline-block;
   border-bottom: 5px solid var(--main-color);
@@ -273,7 +220,7 @@
 }
 .service p {
   color: gray;
-  font-size: 15px;
+  font-size: 1rem;
   font-weight: 500;
 }
 
@@ -297,7 +244,8 @@
   height: 400px;
 }
 
-.prev, .next {
+.prev,
+.next {
   position: absolute;
   width: 40px;
   height: 40px;
@@ -313,14 +261,19 @@
 }
 
 .prev {
-  left: 20px
+  left: 20px;
 }
 
 .next {
   right: 20px;
 }
 
-.prev:hover, .next:hover {
+.prev img, .next img {
+  filter: invert(99%) sepia(1%) saturate(0%) hue-rotate(130deg) brightness(104%) contrast(100%);
+}
+
+.prev:hover,
+.next:hover {
   background-color: #1077c2;
 }
 
@@ -337,8 +290,8 @@
   display: none;
 }
 
-@media (max-width: 600px){
-  .hero-container  {
+@media (max-width: 600px) {
+  .hero-container {
     justify-content: center;
     padding-left: 0px;
     align-self: center;
@@ -349,40 +302,124 @@
   }
 
   .services {
-    width: 600px;
+    width: 100vw;
+    min-height: 350px;
+  }
+
+    .information-header {
+    font-size: 1.7rem;
+  }
+
+  .services h1 {
+    font-size: 1.7rem;
+  }
+
+  .service {
+    width: 100vw;
   }
 
   .cen {
-    width: 600px;
+    width: 100vw;
     grid-template-columns: 400px;
   }
 
-  .prev, .next {
+  .prev,
+  .next {
     display: none;
   }
 
   .main {
-    max-width: 600px;
+    max-width: 100vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-container {
+    padding-left: 15vw;
+    height: 300px;
+  }
+  .hero-maintext {
+    font-size: 1.8rem;
   }
 
+  .hero-subtext {
+    font-size: 1rem;
+  }
+
+  .information-header {
+    font-size: 1.5rem;
+  }
+
+  .services h1 {
+    font-size: 1.5rem;
+  }
+
+  .service h2 {
+    font-size: 1rem;
+  }
+  .service p {
+    color: gray;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .information {
+    margin-bottom: 0px;
+  }
 
 }
 
-@media only screen and (min-width: 600px) {}
+@media (max-width: 380px) {
+  .hero-container {
+    padding-left: 30vw;
+  }
+  .hero-maintext {
+    font-size: 1.6rem;
+  }
+
+  .hero-subtext {
+    font-size: 0.8rem;
+  }
+
+  .information-header {
+    font-size: 1.3rem;
+  }
+
+  .services h1 {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 340px){
+  .hero-container {
+    padding-left: 45vw;
+  }
+  .hero-maintext {
+    font-size: 1.4rem;
+  }
+
+  .hero-subtext {
+    font-size: 0.8rem;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+}
 
 /* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {}
+@media only screen and (min-width: 768px) {
+}
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
-  .service:nth-of-type(4){
+  .service:nth-of-type(4) {
     margin-left: 25rem;
   }
-  .service:nth-of-type(5){
+  .service:nth-of-type(5) {
     margin-left: 25rem;
   }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {}
-
+@media only screen and (min-width: 1200px) {
+}

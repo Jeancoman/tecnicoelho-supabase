@@ -6,6 +6,10 @@ import cn from "classnames";
 const Header = () => {
   const [display, setDisplay] = useState(false);
 
+  const toggle = () => {
+    setDisplay(false);
+  }
+
   return (
     <header className={styles.header}>
       <div className={styles["logo-menu"]}>
@@ -29,32 +33,32 @@ const Header = () => {
       >
         <ul className={styles.ul}>
           <Link href={"/"}>
-            <li className={styles.li}>
+            <li className={styles.li} onClick={toggle}>
               <a className={styles.a}>Inicio</a>
             </li>
           </Link>
           <Link href={"/productos"}>
-            <li className={styles.li}>
+            <li className={styles.li} onClick={toggle}>
               <a className={styles.a}>Productos</a>
             </li>
           </Link>
           <Link href={"/nosotros"}>
-            <li className={styles.li}>
+            <li className={styles.li} onClick={toggle}>
               <a className={styles.a}>Nosotros</a>
             </li>
           </Link>
           <Link href={"/galeria"}>
-            <li className={styles.li}>
+            <li className={styles.li} onClick={toggle}>
               <a className={styles.a}>Galería</a>
             </li>
           </Link>
           <Link href={"/publicaciones"}>
-            <li className={styles.li}>
+            <li className={styles.li } onClick={toggle}>
               <a className={styles.a}>Publicaciones</a>
             </li>
           </Link>
           <Link href={"/contacto"}>
-            <li className={styles.li}>
+            <li className={styles.li} onClick={toggle}>
               <a className={styles.a}>Contacto</a>
             </li>
           </Link>

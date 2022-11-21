@@ -159,10 +159,16 @@ const Home: NextPage = ({ data, posts }: any) => {
             </div>
           </div>
           <button className={styles.prev} onClick={scrollPrev}>
-            {"<"}
+            <picture className={styles["btn-icon"]}>
+              <source srcSet="/left.svg" type="image/svg" />
+              <img src="/left.svg" alt="Whats App" />
+            </picture>
           </button>
           <button className={styles.next} onClick={scrollNext}>
-            {">"}
+          <picture className={styles["btn-icon"]}>
+              <source srcSet="/right.svg" type="image/svg" />
+              <img src="/right.svg" alt="Whats App" />
+            </picture>
           </button>
         </div>
       </section>
@@ -193,10 +199,16 @@ const Home: NextPage = ({ data, posts }: any) => {
             </div>
           </div>
           <button className={styles.prev} onClick={scrollPrevTwo}>
-            {"<"}
+            <picture className={styles["btn-icon"]}>
+              <source srcSet="/left.svg" type="image/svg" />
+              <img src="/left.svg" alt="Whats App" />
+            </picture>
           </button>
           <button className={styles.next} onClick={scrollNextTwo}>
-            {">"}
+          <picture className={styles["btn-icon"]}>
+              <source srcSet="/right.svg" type="image/svg" />
+              <img src="/right.svg" alt="Whats App" />
+            </picture>
           </button>
         </div>
       </section>

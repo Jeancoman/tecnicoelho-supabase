@@ -107,21 +107,25 @@ const NewForm = () => {
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
           placeholder="Nombre"
+          required
         />
         <input
           type="text"
           value={precio}
           onChange={(e) => setPrecio(e.target.value)}
           placeholder="Precio"
+          required
         />
         {imagenes.map((input, index) => {
           return (
             <div key={index} className={styles["image-form"]}>
               <input
+                type="url"
                 name="enlace"
-                placeholder="Enlace de imagen"
+                placeholder="http://www.enlacedeimagen.com"
                 value={input.enlace}
                 onChange={(e) => handleChange(index, e)}
+                required
               />
               {index > 0 ? (
                 <span
@@ -140,7 +144,8 @@ const NewForm = () => {
         <textarea
           value={descripcion}
           onChange={(e) => setDescripcion(e.target.value)}
-          placeholder="Descripción..."
+          placeholder="Descripción del producto..."
+          required
         ></textarea>
         <div className={styles.buttons}>
           <button type="submit" className={styles.button}>
