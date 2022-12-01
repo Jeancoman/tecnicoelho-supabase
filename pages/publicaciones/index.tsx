@@ -6,12 +6,11 @@ import styles from "/styles/Blog.module.css";
 
 const Blog: NextPage = ({ data }: any) => {
   return (
-    <main>
+    <main className={styles["blog-page"]}>
       <Head>
         <title>Publicaciones</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <section className={styles["blog-page"]}>
         {data?.map((doc: any) => {
           return (
             <BlogFeed
@@ -24,7 +23,6 @@ const Blog: NextPage = ({ data }: any) => {
             />
           );
         })}
-      </section>
     </main>
   );
 };

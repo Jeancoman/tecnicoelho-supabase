@@ -15,7 +15,7 @@ const WhatsAppButton = ({showModal, setShowModal}: ModalOpener) => {
       {device.type == "mobile" ? (
         <a
           className={styles["whatsapp_float"]}
-          href="https://wa.me/4262452374"
+          href="https://wa.me/584262452374"
           target="_blank"
           rel="noopener noreferrer"
         >

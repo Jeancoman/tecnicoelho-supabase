@@ -58,7 +58,7 @@ const ProductPage: NextPage = ({ data }: any) => {
               Precio unitario de <span>{formatter.format(data?.precio)} USD</span>
             </div>
             <button className={styles.button} onClick={handleShow}>
-              Contáctanos por email
+              contáctanos 
             </button>
           </div>
         </div>

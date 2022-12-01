@@ -54,6 +54,7 @@ const Contact: NextPage = () => {
         <title>Contacto</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
+      <div className={styles.header}>
         <div className={styles["h2-container"]}>
           <h2>Contáctanos</h2>
           <hr />
@@ -63,6 +64,7 @@ const Contact: NextPage = () => {
           posible sobre su consulta, o llámenos al <span>+58 0426-2452374</span>
           .
         </p>
+        </div>
         <div className={styles.container}>
           <div className={styles.left}>
             <h3>Ubicanos en</h3>

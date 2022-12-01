@@ -19,7 +19,7 @@
     max-width: 100vw;
   }
 
-  body, html {
+  body {
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     background-color: #F6F9FC; 
@@ -49,12 +49,12 @@ img, picture, video, canvas, svg {
   #root, #__next {
     isolation: isolate;
     position: relative;
+    width: 100%;
   }
 
   main {
     margin-left: 100px;
     margin-right: 100px;
-    flex-grow: 1;
   }
 
   body::-webkit-scrollbar {

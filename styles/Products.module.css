@@ -56,7 +56,7 @@
 }
 
 .left-container input[name="search_bar"] {
-  width: 250px;
+  width: 100%;
   height: 40px;
   border: 1px solid rgb(220, 220, 220);
   padding: 10px;
@@ -93,17 +93,17 @@
 @media (max-width: 600px) {
   .products {
     grid-template-columns: none;
-    grid-template-rows: 50px 1fr;
+    grid-template-rows: 50px auto;
   }
 
   .products {
-    width: 400px;
+    max-width: 100vw;
 
   }
 
-
   .container {
     grid-template-columns: 1fr;
+    margin-left: 0;
   }
 
 }

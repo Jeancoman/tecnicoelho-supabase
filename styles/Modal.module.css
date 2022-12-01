@@ -115,7 +115,7 @@
 
 .modal-header {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 4fr 1fr;
   margin-bottom: 10px;
   margin: 0px auto 10px;
 }
@@ -127,11 +127,28 @@
   font-weight: 700;
 }
 
+.close {
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 5px;
+  justify-self: end;
+}
+
+.close img {
+  height: 30px;
+  width: 30px;
+  padding: 2px;
+}
+
+.close:hover {
+  background-color: rgb(230, 230, 230);
+}
+
 @media (max-width: 600px) {
   .modal {
     max-width: 400px;
     left: 10%;
-    right: 10%;
+    right: 15%;
   }
 
   .modal form {
@@ -178,5 +195,17 @@
     grid-column: 1 / 4;
     height: 40px;
     width: 100%;
+  }
+}
+
+@media (max-width: 425px){
+  .modal-header h3 {
+    font-size: 1rem;
+  }
+
+  .close img {
+    height: 25px;
+    width: 25px;
+    padding: 2px;
   }
 }

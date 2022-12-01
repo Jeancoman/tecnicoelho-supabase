@@ -13,7 +13,9 @@ const Modal = ({ show, handleClose, producto }: Show) => {
   const [apellido, setApellido] = useState("");
   const [email, setEmail] = useState("");
   const [asunto, setAsunto] = useState("Me interesa un producto.");
-  const [mensaje, setMensaje] = useState("Hola, me interesa el producto " + producto + ".");
+  const [mensaje, setMensaje] = useState(
+    "Hola, me interesa el producto " + producto + "."
+  );
   const [telefono, setTelefono] = useState("");
   const ref = useRef<HTMLDialogElement>(null);
 
@@ -58,11 +60,11 @@ const Modal = ({ show, handleClose, producto }: Show) => {
   useEffect(() => {
     const dialog = ref.current;
 
-    dialog?.removeAttribute('open');
+    dialog?.removeAttribute("open");
 
     if (show) {
       dialog?.showModal();
-    } 
+    }
 
     return () => dialog?.close();
   }, [show]);
@@ -72,7 +74,13 @@ const Modal = ({ show, handleClose, producto }: Show) => {
       <dialog id="dialog" className={styles.modal} ref={ref}>
         <div className={styles["modal-header"]}>
           <h3>Formulario de contacto</h3>
-          <span onClick={handleClose}>X</span>
+            <picture
+              onClick={handleClose}
+              className={styles.close}
+            >
+              <source srcSet="/close.svg" type="image/svg" />
+              <img src="/close.svg" alt="Close" />
+            </picture>
         </div>
         <form onSubmit={handleSubmit} method="POST">
           <input

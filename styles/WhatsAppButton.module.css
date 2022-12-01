@@ -35,6 +35,7 @@
 @media screen and (max-width: 767px) {
   .whatsapp-icon {
     margin-top: 7px;
+    margin-right: 1px;
   }
 
   .whatsapp_float {

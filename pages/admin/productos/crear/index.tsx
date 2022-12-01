@@ -1,5 +1,4 @@
 import { withPageAuth } from "@supabase/auth-helpers-nextjs";
-import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";

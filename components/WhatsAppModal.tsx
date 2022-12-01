@@ -14,7 +14,7 @@ const WhatsAppModal = ({ showModal, setShowModal }: Modal) => {
     e.preventDefault();
     const text = encodeURI(message);
     window.open(
-      "https://web.whatsapp.com/send?phone=4262452374&text=" +
+      "https://web.whatsapp.com/send?phone=584262452374&text=" +
         text +
         "&app_absent=0"
     );

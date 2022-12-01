@@ -4,12 +4,12 @@
   align-items: center;
   justify-items: center;
   gap: 20px;
-  width: 800px;
+  width: 900px;
   height: 300px;
 }
 .container img {
-    height: 250px;
-    width: 380px;
+  height: 250px;
+  width: 380px;
   border-radius: 5px;
   cursor: pointer;
 }
@@ -51,14 +51,56 @@
   .container {
     max-width: 400px;
     height: 200px;
+    flex-direction: column;
   }
 
   .titulo {
     font-size: 1rem;
-    text-align: left;
+    text-align: center;
   }
 
   .fecha {
     font-size: 1rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .container img {
+    height: 180px;
+    width: 280px;
+  }
+
+  .container {
+    width: 350px;
+  }
+
+  .container div:first-of-type picture {
+    width: 350px;
+  }
+
+  .titulo,
+  .fecha {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 380px) {
+  .container img {
+    height: 160px;
+    width: 260px;
+  }
+
+  .container {
+    width: 330px;
+  }
+
+  .container div:first-of-type picture {
+    width: 330px;
+  }
+
+  .titulo,
+  .fecha {
+    font-size: 18px;
   }
 }

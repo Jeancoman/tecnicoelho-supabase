@@ -10,12 +10,13 @@
 .container {
     display: grid;
     place-items: center;
-    width: 800px;
+    max-width: 800px;
     row-gap: 30px;
 }
 
 .container img {
     border-radius: 5px;
+    width: 800px;
 }
 
 .titulo {
@@ -26,7 +27,7 @@
 }
 
 .contenido {
-    width: 800px;
+    max-width: 800px;
     text-align: justify;
     justify-self: center;
     white-space: pre-wrap;
@@ -40,11 +41,11 @@
 
 @media (max-width: 600px){
     .container {
-        max-width: 400px;
+        max-width: 100%;
     }
 
     .contenido {
-        max-width: 400px;
+        max-width: 100%;
     }
 
     .titulo {
@@ -52,6 +53,6 @@
     }
 
     .main {
-        width: 100vw;
+        max-width: 100vw;
     }
 }

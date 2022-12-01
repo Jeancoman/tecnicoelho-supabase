@@ -23,8 +23,6 @@ const Posts: NextPage = () => {
           `id, creado_en, titulo, contenido, actualizado_en, id_imagen(id, enlace)`
         );
 
-      console.log(publicaciones);
-
       const post = publicaciones.data?.map((publicacion: any) => {
         return {
           ...publicacion,

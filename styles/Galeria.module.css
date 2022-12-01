@@ -91,7 +91,14 @@
   }
 
   @media (max-width: 600px){
-    .main {
-        width: 400px;
+
+
+    .container {
+        grid-template-columns: none;
+        width:  100vw;
+    }
+
+    .h1 h1 {
+        font-size: 25px;
     }
   }

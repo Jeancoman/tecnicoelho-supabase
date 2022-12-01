@@ -112,7 +112,6 @@
 @media (max-width: 600px) {
   .main {
     max-width: 400px;
-    height: 1200px;
   }
 
   .right picture img {
@@ -128,4 +127,62 @@
   .center div {
     width: 220px;
   }
+
+  .bottom {
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 550px) {
+  .right picture img {
+    border-radius: 5px;
+    max-width: 400px;
+    max-height: 250px;
+  }
+
+  .left {
+    max-width: 400px;
+  }
+
+  .center div {
+    width: 170px;
+  } 
+
+  .center div p {
+    font-size: 15px;
+  }
+
+  .bottom {
+    max-width: 400px;
+  }
+
+}
+
+@media (max-width: 450px) {
+  .right picture img {
+    border-radius: 5px;
+    max-width: 300px;
+    max-height: 200px;
+  }
+
+  .left {
+    max-width: 300px;
+  }
+
+  .center div {
+    width: 120px;
+  } 
+  
+
+  .center div p {
+    font-size: 12px;
+  }
+
+  .bottom {
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 340px){
+
 }
