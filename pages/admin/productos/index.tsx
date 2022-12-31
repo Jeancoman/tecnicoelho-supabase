@@ -444,10 +444,6 @@ const EditForm = ({ producto, set, value, setData }: any) => {
   );
 };
 
-/*
-
 export const getServerSideProps = withPageAuth({ redirectTo: "/admin/login" });
-
-*/
 
 export default ProductosPage;

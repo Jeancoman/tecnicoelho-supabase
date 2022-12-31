@@ -132,10 +132,6 @@ const NewForm: NextPage = () => {
   );
 };
 
-/*
-
 export const getServerSideProps = withPageAuth({ redirectTo: "/admin/login" });
-
-*/
 
 export default NewForm;

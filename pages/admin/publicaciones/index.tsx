@@ -220,8 +220,6 @@ const EditForm = ({ data, set, value, setData }: any) => {
   );
 };
 
-/*
 export const getServerSideProps = withPageAuth({ redirectTo: "/admin/login" });
-*/
 
 export default Posts;
