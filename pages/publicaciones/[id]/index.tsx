@@ -1,6 +1,7 @@
 import { GetStaticProps, NextPage } from "next";
 import { supabase } from "../../../utilities/supabaseClient";
 import styles from "/styles/BlogPost.module.css";
+import markdown from "/styles/Markdown.module.css";
 import Head from "next/head";
 
 const Post: NextPage = ({ data }: any) => {
@@ -25,7 +26,7 @@ const Post: NextPage = ({ data }: any) => {
         <div className={styles.preview}>
           <div className={styles.fecha}>Fecha de creación: {data?.creado_en.slice(0, 10)}</div>
           <div className={styles.titulo}>{data?.titulo}</div>
-          <p className={styles.contenido}>{data?.contenido}</p>
+          <article className={markdown["markdown-body"]} dangerouslySetInnerHTML={{__html: data?.contenido}} />
         </div>
       </div>
     </main>

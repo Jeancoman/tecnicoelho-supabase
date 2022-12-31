@@ -1,7 +1,7 @@
 .products {
   display: grid;
-  grid-template-columns: 2fr 6fr;
-  gap: 40px;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
   place-content: center;
   min-height: 85vh;
   padding: 50px 0px;
@@ -17,7 +17,7 @@
 .not-found {
   min-height: 380px;
   width: 800px;
-  color: var(--main-color)
+  color: var(--main-color);
 }
 
 .not-found h2 {
@@ -56,7 +56,7 @@
 }
 
 .left-container input[name="search_bar"] {
-  width: 100%;
+  width: 270px;
   height: 40px;
   border: 1px solid rgb(220, 220, 220);
   padding: 10px;
@@ -85,12 +85,63 @@
 .container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  column-gap: 20px;
   row-gap: 40px;
   margin-left: -2%;
   place-items: center;
 }
+@media (max-width: 450px) {
+  .products {
+    grid-template-columns: none;
+    grid-template-rows: 1fr auto;
+  }
 
-@media (max-width: 600px) {
+  .products {
+    max-width: 100vw;
+  }
+
+  .left-container {
+    place-self: center;
+    width: 100%;
+  }
+
+  .left-container input[name="search_bar"] {
+    width: 100%;
+  }
+
+  .container {
+    grid-template-columns: 1fr;
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 450px) and (max-width: 600px) {
+  .products {
+    grid-template-columns: none;
+    grid-template-rows: 1fr auto;
+  }
+
+  .products {
+    max-width: 100vw;
+  }
+
+  .left-container {
+    place-self: center;
+    width: 90%;
+  }
+
+  .left-container input[name="search_bar"] {
+    width: 90%;
+    margin-left: 10px;
+  }
+
+  .container {
+    grid-template-columns: 1fr;
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 991px) {
   .products {
     grid-template-columns: none;
     grid-template-rows: 50px auto;
@@ -98,12 +149,44 @@
 
   .products {
     max-width: 100vw;
+  }
 
+  .left-container {
+    place-self: center;
+    width: 100%;
+  }
+
+  .left-container input[name="search_bar"] {
+    width: 100%;
   }
 
   .container {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     margin-left: 0;
   }
+}
 
+@media (min-width: 992px) and (max-width: 1299px) {
+  .products {
+    grid-template-columns: none;
+    grid-template-rows: 50px auto;
+  }
+
+  .products {
+    max-width: 100vw;
+  }
+
+  .left-container {
+    place-self: center;
+    width: 100%;
+  }
+
+  .left-container input[name="search_bar"] {
+    width: 100%;
+  }
+
+  .container {
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-left: 0;
+  }
 }

@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, SetStateAction, useEffect, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 import styles from "../styles/WhatsAppModal.module.css";
 
 type Modal = {
@@ -23,6 +23,21 @@ const WhatsAppModal = ({ showModal, setShowModal }: Modal) => {
     setMessage("");
   };
 
+  const escFunction = useCallback((event: { key: string }) => {
+    if (event.key === "Escape") {
+      setShowModal(false);
+    }
+  }, []);
+
+  const outsideClick = (event: MouseEvent) => {
+    const dialog = ref.current;
+    const e = event.target as HTMLElement;
+
+    if (e.innerHTML === dialog?.innerHTML) {
+      setShowModal(false);
+    }
+  };
+
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value)
   }
@@ -38,6 +53,35 @@ const WhatsAppModal = ({ showModal, setShowModal }: Modal) => {
 
     return () => dialog?.close();
   }, [showModal]);
+
+  useEffect(() => {
+    const dialog = ref.current;
+
+    dialog?.removeAttribute("open");
+
+    if (showModal) {
+      dialog?.showModal();
+    }
+
+    return () => dialog?.close();
+  }, [showModal]);
+
+  useEffect(() => {
+    document.addEventListener("keydown", escFunction, false);
+
+    return () => {
+      document.removeEventListener("keydown", escFunction, false);
+    };
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("click", outsideClick, true);
+
+    return () => {
+      document.removeEventListener("click", outsideClick, true);
+    };
+  }, []);
+
 
   return (
     <dialog ref={ref} className={styles.modal}>

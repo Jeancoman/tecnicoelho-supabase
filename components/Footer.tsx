@@ -4,7 +4,7 @@ const Footer = () => {
     return (
         <footer className={styles.footer}>
             <p>
-                Copyright © 2014-2022 <strong>TecniCoelho</strong>
+                Copyright © 2014-{new Date().getFullYear()} <strong>TecniCoelho</strong>
             </p>
         </footer>
     )

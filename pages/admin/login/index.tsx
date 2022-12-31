@@ -1,25 +1,18 @@
 import { GetServerSideProps, NextPage } from "next/types";
 import { FormEvent, useEffect, useState } from "react";
 import styles from "/styles/Login.module.css";
-import toast, { Toaster } from "react-hot-toast";
-import { useRouter } from "next/router";
 import { supabase } from "../../../utilities/supabaseClient";
-import { useUser } from "@supabase/auth-helpers-react";
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import Head from "next/head";
 
 const Login: NextPage = () => {
   const [email, setEmail] = useState("");
-  const router = useRouter();
-  const user = useUser();
   const [counter, setCounter] = useState(60);
   const [submited, setSubmited] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { data, error } = await supabase.auth.signInWithOtp({
-      email: email,
-    });
+    await supabase.auth.signInWithOtp({ email: email });
     setSubmited(true);
   };
 
@@ -51,11 +44,10 @@ const Login: NextPage = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
             <button disabled={submited}>
-              {submited ? <>{counter}</> : <>Enviar correo de verificación</>}
+              {submited ? <>{counter}</> : <>Confirmar</>}
             </button>
           </form>
         </div>
-        <Toaster />
       </main>
     </>
   );

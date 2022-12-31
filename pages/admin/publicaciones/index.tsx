@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AdminPanel from "../../../components/AdminPanel";
 import styles from "/styles/PostPanel.module.css";
 import { useRouter } from "next/router";
@@ -8,6 +8,7 @@ import { supabase } from "../../../utilities/supabaseClient";
 import Loader from "../../../components/Loader";
 import { withPageAuth } from "@supabase/auth-helpers-nextjs";
 import Head from "next/head";
+import { Editor } from "@tinymce/tinymce-react";
 
 const Posts: NextPage = () => {
   const [data, setData] = useState<{ [key: string]: string }[]>();
@@ -59,7 +60,7 @@ const Posts: NextPage = () => {
 
   return (
     <>
-      <div className={styles.container}>
+      <main className={styles.container}>
         <Head>
           <title>Panel de Control</title>
           <meta
@@ -119,7 +120,7 @@ const Posts: NextPage = () => {
           />
         )}
         <Toaster />
-      </div>
+      </main>
     </>
   );
 };
@@ -171,7 +172,7 @@ const EditForm = ({ data, set, value, setData }: any) => {
 
   return (
     <div className={styles["edit-form"]}>
-      <h2>Publicación - {data.id}</h2>
+      <h2>Publicación #{data.id}</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -186,11 +187,26 @@ const EditForm = ({ data, set, value, setData }: any) => {
           placeholder="http://www.enlacedeimagen.com"
           required
         />
-        <textarea
+        <Editor
+          apiKey={process.env.NEXT_PUBLIC_TINY_API_KEY!}
           value={contenido}
-          onChange={(e) => setContenido(e.target.value)}
-          required
-        ></textarea>
+          onEditorChange={(evt, editor) => setContenido(editor.getContent())}
+          init={{
+            height: 500,
+            menubar: true,
+            plugins: [
+              'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+              'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+              'insertdatetime', 'media', 'table', 'help', 'wordcount', "emoticons"
+            ],
+            toolbar: 'undo redo | blocks | ' +
+              'bold italic forecolor | alignleft aligncenter ' +
+              'alignright alignjustify | bullist numlist outdent indent | ' +
+              'removeformat | help',
+            content_style: "@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap'); body { font-family:Open Sans,Helvetica,Arial,sans-serif; font-size:14px }",
+            language: 'es'
+          }}
+        />
         <div className={styles.buttons}>
           <button type="submit" className={styles.button}>
             Guardar cambios
@@ -204,6 +220,8 @@ const EditForm = ({ data, set, value, setData }: any) => {
   );
 };
 
+/*
 export const getServerSideProps = withPageAuth({ redirectTo: "/admin/login" });
+*/
 
 export default Posts;

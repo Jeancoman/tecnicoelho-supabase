@@ -1,9 +1,10 @@
 import { useUser } from "@supabase/auth-helpers-react";
 import { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { supabase } from "../../utilities/supabaseClient";
 import styles from "/styles/Galeria.module.css";
+import markdown from "/styles/Markdown.module.css";
 
 const Galeria: NextPage = ({ data }: any) => {
   const [show, setShow] = useState(false);
@@ -55,6 +56,21 @@ const Galeria: NextPage = ({ data }: any) => {
 const Dialog = ({ show, setShow, src, descripcion }: any) => {
   const ref = useRef<HTMLDialogElement>(null);
 
+  const escFunction = useCallback((event: { key: string }) => {
+    if (event.key === "Escape") {
+      setShow(!show);
+    }
+  }, []);
+
+  const outsideClick = (event: MouseEvent) => {
+    const dialog = ref.current;
+    const e = event.target as HTMLElement;
+
+    if (e.innerHTML === dialog?.innerHTML) {
+      setShow(!show);
+    }
+  };
+
   useEffect(() => {
     const dialog = ref.current;
 
@@ -67,15 +83,39 @@ const Dialog = ({ show, setShow, src, descripcion }: any) => {
     return () => dialog?.close();
   }, [show]);
 
+  useEffect(() => {
+    document.addEventListener("keydown", escFunction, false);
+
+    return () => {
+      document.removeEventListener("keydown", escFunction, false);
+    };
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("click", outsideClick, true);
+
+    return () => {
+      document.removeEventListener("click", outsideClick, true);
+    };
+  }, []);
+
   return (
     <>
       <dialog className={styles.modal} ref={ref}>
         <picture className={styles.img}>
           <source srcSet={src} />
           <img src={src} alt="Profile placeholder" />
-          <div className={styles.overlay}>{descripcion}</div>
+          <div className={styles.overlay}>
+            <div
+              className={markdown["markdown-body"]}
+              dangerouslySetInnerHTML={{ __html: descripcion }}
+            />
+          </div>
         </picture>
-        <span onClick={() => setShow(!show)}>X</span>
+        <picture onClick={() => setShow(!show)} className={styles.close}>
+          <source srcSet="/close.svg" type="image/svg" />
+          <img src="/close.svg" alt="Close" />
+        </picture>
       </dialog>
     </>
   );

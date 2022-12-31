@@ -2,6 +2,7 @@ import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { useState } from "react";
 import { supabase } from "../../../utilities/supabaseClient";
 import styles from "/styles/ProductPage.module.css";
+import markdown from "/styles/Markdown.module.css";
 import toast, { Toaster } from "react-hot-toast";
 import Modal from "../../../components/Modal";
 import Head from "next/head";
@@ -68,7 +69,7 @@ const ProductPage: NextPage = ({ data }: any) => {
           </div>
           <hr />
           <div className={styles["descom-container"]}>
-            <p>{data?.descripción}</p>
+            <div className={markdown["markdown-body"]} dangerouslySetInnerHTML={{__html: data?.descripción}} />
           </div>
         </div>
       <Modal show={show} handleClose={handleClose} producto={data?.nombre} />

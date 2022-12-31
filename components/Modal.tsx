@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import styles from "../styles/Modal.module.css";
 import toast from "react-hot-toast";
 
@@ -18,6 +18,21 @@ const Modal = ({ show, handleClose, producto }: Show) => {
   );
   const [telefono, setTelefono] = useState("");
   const ref = useRef<HTMLDialogElement>(null);
+
+  const escFunction = useCallback((event: { key: string }) => {
+    if (event.key === "Escape") {
+      handleClose();
+    }
+  }, []);
+
+  const outsideClick = (event: MouseEvent) => {
+    const dialog = ref.current;
+    const e = event.target as HTMLElement;
+
+    if (e.innerHTML === dialog?.innerHTML) {
+      handleClose();
+    }
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -69,18 +84,31 @@ const Modal = ({ show, handleClose, producto }: Show) => {
     return () => dialog?.close();
   }, [show]);
 
+  useEffect(() => {
+    document.addEventListener("keydown", escFunction, false);
+
+    return () => {
+      document.removeEventListener("keydown", escFunction, false);
+    };
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("click", outsideClick, true);
+
+    return () => {
+      document.removeEventListener("click", outsideClick, true);
+    };
+  }, []);
+
   return (
     <>
       <dialog id="dialog" className={styles.modal} ref={ref}>
         <div className={styles["modal-header"]}>
           <h3>Formulario de contacto</h3>
-            <picture
-              onClick={handleClose}
-              className={styles.close}
-            >
-              <source srcSet="/close.svg" type="image/svg" />
-              <img src="/close.svg" alt="Close" />
-            </picture>
+          <picture onClick={handleClose} className={styles.close}>
+            <source srcSet="/close.svg" type="image/svg" />
+            <img src="/close.svg" alt="Close" />
+          </picture>
         </div>
         <form onSubmit={handleSubmit} method="POST">
           <input

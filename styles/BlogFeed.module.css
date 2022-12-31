@@ -5,13 +5,17 @@
   justify-items: center;
   gap: 20px;
   width: 900px;
-  height: 300px;
+  height: 200px;
 }
 .container img {
   height: 250px;
   width: 380px;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.preview {
+  align-self: flex-start;
 }
 
 .container div:first-of-type picture {
@@ -102,5 +106,29 @@
   .titulo,
   .fecha {
     font-size: 18px;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 1050px) {
+  .container {
+    width: 700px;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 800px) {
+  .container {
+    flex-direction: column;
+    gap: 70px;
+    width: 400px;
+  }
+
+  .titulo {
+    font-size: 1.3rem;
+    text-align: center;
+  }
+
+  .fecha {
+    font-size: 1.3rem;
+    text-align: center;
   }
 }

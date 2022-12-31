@@ -15,6 +15,7 @@
   -moz-box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.3);
   display: grid;
   place-items: center;
+  place-self: center;
   margin: 50px 0px;
 }
 
@@ -52,4 +53,43 @@
   display: grid;
   height: 508px;
   place-content: center;
+}
+
+@media (max-width: 600px){
+
+  .login-form  {
+    width: 300px
+  }
+
+  .login-form form  {
+    width: 250px
+  }
+
+  .login-form input {
+    width: 200px;
+  }
+
+  .login-form button {
+    width: 200px;
+  }
+}
+
+@media (max-width: 350px){
+
+  .login-form  {
+    width: 250px
+  }
+
+  .login-form form  {
+    width: 200px
+  }
+
+  .login-form input {
+    width: 150px;
+  }
+
+  .login-form button {
+    width: 150px;
+    text-overflow: ellipsis;
+  }
 }

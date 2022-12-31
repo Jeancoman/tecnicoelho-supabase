@@ -1,4 +1,5 @@
 import { withPageAuth } from "@supabase/auth-helpers-nextjs";
+import { Editor } from "@tinymce/tinymce-react";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -50,12 +51,13 @@ const NewForm: NextPage = () => {
   };
 
   return (
-    <div className={styles["new-form"]}>
+    <main className={styles["main-new"]}>
       <Head>
         <title>Panel de Control</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <h2>Nueva imagen</h2>
+      <div className={styles["new-form"]}>
+      <h2>Formulario de imagen</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="url"
@@ -63,11 +65,27 @@ const NewForm: NextPage = () => {
           placeholder="http://www.enlacedeimagen.com"
           required
         />
-        <textarea
-          onChange={(e) => setTexto(e.target.value)}
-          placeholder="Descripción de la imagen..."
-          required
-        ></textarea>
+        <Editor
+          apiKey={process.env.NEXT_PUBLIC_TINY_API_KEY!}
+          value={texto}
+          onEditorChange={(evt, editor) => setTexto(editor.getContent())}
+          init={{
+            height: 500,
+            menubar: true,
+            font_formats: "",
+            plugins: [
+              'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+              'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+              'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount', "emoticons"
+            ],
+            toolbar: 'undo redo | blocks | ' +
+              'bold italic forecolor | alignleft aligncenter ' +
+              'alignright alignjustify | bullist numlist outdent indent | ' +
+              'removeformat | help',
+            content_style: "@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap'); body { font-family:Open Sans,Helvetica,Arial,sans-serif; font-size:14px }",
+            language: 'es'
+          }}
+        />
         <div className={styles.buttons}>
           <button type="submit" className={styles.button}>
             Crear nueva imagen
@@ -81,11 +99,16 @@ const NewForm: NextPage = () => {
           </button>
         </div>
       </form>
+      </div>
       <Toaster />
-    </div>
+    </main>
   );
 };
 
+/*
+
 export const getServerSideProps = withPageAuth({ redirectTo: "/admin/login" });
+
+*/
 
 export default NewForm;
