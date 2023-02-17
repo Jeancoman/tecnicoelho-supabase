@@ -190,3 +190,28 @@
     margin-left: 0;
   }
 }
+
+
+@media (min-width: 1300px) {
+  .products {
+    grid-template-columns: 250px 1fr;
+  }
+
+  .products {
+    max-width: 100vw;
+  }
+
+  .left-container {
+    place-self: start;
+    width: 100%;
+  }
+
+  .left-container input[name="search_bar"] {
+    width: 100%;
+  }
+
+  .container {
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-left: 0;
+  }
+}
