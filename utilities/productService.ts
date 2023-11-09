@@ -1,4 +1,4 @@
-import { Producto } from "../pages/types";
+import { Producto } from "../types";
 
 export default class ProductService {
   static async getAll(page: number, size: number) {

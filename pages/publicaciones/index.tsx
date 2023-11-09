@@ -5,7 +5,7 @@ import BlogFeed from "../../components/BlogFeed";
 import Loader from "../../components/Loader";
 import styles from "/styles/Blog.module.css";
 import PublicationService from "../../utilities/publicationService";
-import { Publicación } from "../types";
+import { Publicación } from "../../types";
 
 const Blog: NextPage = ({ data }: any) => {
   const [post, setPost] = useState<Publicación[]>(data.rows || []);

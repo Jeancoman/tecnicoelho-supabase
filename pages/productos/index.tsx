@@ -4,7 +4,7 @@ import Product from "../../components/Product";
 import Head from "next/head";
 import { useCallback, useEffect, useState } from "react";
 import debounce from "lodash.debounce";
-import { Producto } from "../types";
+import { Producto } from "../../types";
 import ProductService from "../../utilities/productService";
 
 const Products: NextPage = ({ data }: any) => {

@@ -1,4 +1,4 @@
-import { Publicación } from "../pages/types";
+import { Publicación } from "../types";
 
 export default class PublicationService {
   static async getAll(page: number, size: number) {

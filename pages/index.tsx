@@ -5,7 +5,7 @@ import { useCallback, useState } from "react";
 import BlogFeed from "../components/BlogFeedHome";
 import Product from "../components/Product";
 import styles from "../styles/Home.module.css";
-import { Producto, Publicación } from "./types";
+import { Producto, Publicación } from "../types";
 import ProductService from "../utilities/productService";
 import PublicationService from "../utilities/publicationService";
 

@@ -4,7 +4,7 @@ import markdown from "/styles/Markdown.module.css";
 import Head from "next/head";
 import PublicationService from "../../../utilities/publicationService";
 import { useState } from "react";
-import { Publicación } from "../../types";
+import { Publicación } from "../../../types";
 
 const Post: NextPage = ({ data }: any) => {
   const [post] = useState<Publicación>(data)

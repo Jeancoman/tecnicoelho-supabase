@@ -6,7 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 import Modal from "../../../components/Modal";
 import Head from "next/head";
 import ProductService from "../../../utilities/productService";
-import { Producto } from "../../types";
+import { Producto } from "../../../types";
 
 const ProductPage: NextPage = ({ data }: any) => {
   const [product] = useState<Producto>(data)

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "/styles/Galeria.module.css";
 import markdown from "/styles/Markdown.module.css";
 import ImageService from "../../utilities/imageService";
-import { Imagen } from "../types";
+import { Imagen } from "../../types";
 
 const Galeria: NextPage = ({ data }: any) => {
   const [show, setShow] = useState(false);
