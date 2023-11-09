@@ -1,51 +1,42 @@
-import type { GetStaticProps, NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import BlogFeed from "../../components/BlogFeed";
 import Loader from "../../components/Loader";
-import { supabase } from "../../utilities/supabaseClient";
 import styles from "/styles/Blog.module.css";
+import PublicationService from "../../utilities/publicationService";
+import { Publicación } from "../types";
 
 const Blog: NextPage = ({ data }: any) => {
-  const [post, setPost] = useState(data);
-  const [from, setFrom] = useState(10);
-  const [to, setTo] = useState(19);
-  const [morePost, setMorePost] = useState<any>();
+  const [post, setPost] = useState<Publicación[]>(data.rows || []);
+  const [page, setPage] = useState(data.current);
+  const [pages] = useState(data.pages);
   const [loading, setLoading] = useState(false);
   const [isEnd, setIsEnd] = useState(false);
 
   const fetchPost = async () => {
-    const publicaciones = await supabase
-      .from("publicación")
-      .select(
-        `id, creado_en, titulo, contenido, actualizado_en, id_imagen(enlace)`
-      )
-      .order("creado_en", { ascending: false })
-      .range(from, to);
+    setLoading(true)
+    const data = await PublicationService.getAll(page + 1, 9);
+    setPage(page + 1);
 
-    const returnedPost = publicaciones.data?.map((publicacion: any) => {
-      return {
-        ...publicacion,
-        id_imagen: publicacion.id_imagen.enlace,
-      };
-    });
-
-    setMorePost(returnedPost);
-    setPost(post.concat(returnedPost));
+    if(data){
+      setPost(post.concat(data.rows));
+    }
+    setLoading(false)
   };
 
   const areMorePost = () => {
-    if (post.length < 10) {
+    if (post.length < 9) {
       setIsEnd(true);
     }
-    if (morePost?.length < 10) {
+    if (page === pages) {
       setIsEnd(true);
     }
   };
 
   useEffect(() => {
     areMorePost();
-  }, [morePost])
+  }, [page])
 
   return (
     <main className={styles["blog-page"]}>
@@ -53,20 +44,20 @@ const Blog: NextPage = ({ data }: any) => {
         <title>Publicaciones</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      {post?.map((doc: any) => {
+      {post?.map((doc) => {
         return (
           <BlogFeed
-            fecha={doc.creado_en}
-            imagen={doc.id_imagen}
+            fecha={doc.creada}
+            imagen={doc.imagen?.url || "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081"}
             contenido={doc.contenido}
-            titulo={doc.titulo}
+            titulo={doc.título}
             key={doc.id}
-            id={doc.id}
+            id={doc.slug}
           />
         );
       })}
       <div>
-        {isEnd ? (
+        {isEnd  ? (
           <p className={styles["no-more-post"]}>¡No hay más publicaciones!</p>
         ) : loading ? (
           <Loader />
@@ -80,25 +71,12 @@ const Blog: NextPage = ({ data }: any) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  const publicaciones = await supabase
-    .from("publicación")
-    .select(
-      `id, creado_en, titulo, contenido, actualizado_en, id_imagen(enlace)`
-    )
-    .order("creado_en", { ascending: false })
-    .range(0, 9);
-
-  const post = publicaciones.data?.map((publicacion: any) => {
-    return {
-      ...publicacion,
-      id_imagen: publicacion.id_imagen.enlace,
-    };
-  });
+export const getServerSideProps: GetServerSideProps = async () => {
+  const data = await PublicationService.getAll(1,9)
 
   return {
     props: {
-      data: post,
+      data,
     },
   };
 };

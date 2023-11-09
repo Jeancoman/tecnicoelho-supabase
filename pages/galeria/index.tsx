@@ -1,16 +1,16 @@
-import { useUser } from "@supabase/auth-helpers-react";
 import { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { supabase } from "../../utilities/supabaseClient";
 import styles from "/styles/Galeria.module.css";
 import markdown from "/styles/Markdown.module.css";
+import ImageService from "../../utilities/imageService";
+import { Imagen } from "../types";
 
 const Galeria: NextPage = ({ data }: any) => {
   const [show, setShow] = useState(false);
   const [current, setCurrent] = useState<string>();
   const [descripcion, setDescripcion] = useState<string>();
-  const user = useUser();
+  const [images] = useState<Imagen[]>(data.rows || [])
 
   const handleClick = (src: string, description: string) => {
     setCurrent(src);
@@ -18,7 +18,7 @@ const Galeria: NextPage = ({ data }: any) => {
     setDescripcion(description);
   };
 
-  console.log(user);
+  console.log(images);
 
   return (
     <main className={styles.main}>
@@ -29,15 +29,15 @@ const Galeria: NextPage = ({ data }: any) => {
       <div className={styles["h1"]}>
         <h1>Galería</h1>
         <div className={styles.container}>
-          {data?.map((d: any, i: any) => {
+          {images?.map((d, i: any) => {
             return (
               <picture
                 key={i}
                 className={styles.picture}
-                onClick={() => handleClick(d.enlace, d.texto)}
+                onClick={() => handleClick(d.url, d.descripción || "")}
               >
-                <source srcSet={d.enlace} />
-                <img src={d.enlace} alt="Profile placeholder" />
+                <source srcSet={d.url} />
+                <img src={d.url} alt="Profile placeholder" />
               </picture>
             );
           })}
@@ -122,21 +122,11 @@ const Dialog = ({ show, setShow, src, descripcion }: any) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data, error } = await supabase
-    .from("imagen_descripción")
-    .select("texto, id_imagen(enlace)");
-
-  const mapped = data?.map((data: any) => {
-    return {
-      ...data,
-      id_imagen: data?.id_imagen,
-      enlace: data?.id_imagen.enlace,
-    };
-  });
+  const data = await ImageService.getAll(1, 2000)
 
   return {
     props: {
-      data: mapped,
+      data,
     },
   };
 };

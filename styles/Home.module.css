@@ -224,6 +224,10 @@
   font-weight: 500;
 }
 
+.below {
+padding-bottom: 60px;
+}
+
 .embla {
   overflow: hidden;
   position: relative;

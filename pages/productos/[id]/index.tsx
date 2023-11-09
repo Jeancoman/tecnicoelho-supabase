@@ -1,15 +1,17 @@
-import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import { useState } from "react";
-import { supabase } from "../../../utilities/supabaseClient";
 import styles from "/styles/ProductPage.module.css";
 import markdown from "/styles/Markdown.module.css";
 import toast, { Toaster } from "react-hot-toast";
 import Modal from "../../../components/Modal";
 import Head from "next/head";
+import ProductService from "../../../utilities/productService";
+import { Producto } from "../../types";
 
 const ProductPage: NextPage = ({ data }: any) => {
-  const [actualImage, setActualImage] = useState<string>(data?.imagenes[0]);
-  const [images, setImages] = useState<string[]>(data?.imagenes);
+  const [product] = useState<Producto>(data)
+  const [actualImage, setActualImage] = useState<string>(product?.imagens?.[0]?.url || "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081");
+  const [images, setImages] = useState<string[]>(product?.imagens?.map((img) => img.url) || []);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -19,7 +21,7 @@ const ProductPage: NextPage = ({ data }: any) => {
     setActualImage(img);
   };
 
-  const formatter = new Intl.NumberFormat('en-US', {
+  const formatter = new Intl.NumberFormat('es-VE', {
     style: 'currency',
     currency: 'USD',
   });
@@ -56,7 +58,7 @@ const ProductPage: NextPage = ({ data }: any) => {
           <div className={styles["product-info"]}>
             <h3>{data?.nombre}</h3>
             <div className={styles.price}>
-              Precio unitario de <span>{formatter.format(data?.precio)} USD</span>
+              Precio unitario de <span>{formatter.format(data?.precio)}</span>
             </div>
             <button className={styles.button} onClick={handleShow}>
               contáctanos 
@@ -78,47 +80,11 @@ const ProductPage: NextPage = ({ data }: any) => {
   );
 };
 
-export const getStaticPaths = async () => {
-  const productos = await supabase.from("producto").select();
+export const getServerSideProps: GetServerSideProps = async ({ params }: any) => {
+  const producto = await ProductService.getBySlug(params.id);
 
-  const paths = productos.data?.map((product: any) => {
-    return {
-      params: {
-        id: product.id.toString(),
-      },
-    };
-  });
 
-  console.log(paths);
-
-  return {
-    paths,
-    fallback: "blocking",
-  };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }: any) => {
-  const producto = await supabase.from("producto").select().eq("id", params.id);
-  const imagenProducto = await supabase
-    .from("imagen_producto")
-    .select(`id_producto, id_imagen(enlace)`);
-
-  const curated = producto.data?.map((producto) => {
-    const imagenes = imagenProducto.data?.filter(
-      (imagen) => imagen.id_producto === producto.id
-    );
-
-    const enlaces = imagenes?.map((imagen: any) => imagen.id_imagen.enlace);
-
-    return {
-      ...producto,
-      imagenes: enlaces,
-    };
-  });
-
-  const data = curated?.[0];
-
-  if(!data){
+  if(!producto){
     return {
       notFound: true,
     }
@@ -126,7 +92,7 @@ export const getStaticProps: GetStaticProps = async ({ params }: any) => {
 
   return {
     props: {
-      data,
+      data: producto,
     },
   };
 };

@@ -1,33 +1,27 @@
-import type { GetStaticProps, NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import styles from "/styles/Products.module.css";
 import Product from "../../components/Product";
-import { supabase } from "../../utilities/supabaseClient";
 import Head from "next/head";
 import { useCallback, useEffect, useState } from "react";
 import debounce from "lodash.debounce";
+import { Producto } from "../types";
+import ProductService from "../../utilities/productService";
 
 const Products: NextPage = ({ data }: any) => {
-  const [from, setFrom] = useState(0);
-  const [to, setTo] = useState(8);
-  const [products, setProducts] = useState(data);
-  const [productsEnd, setProductsEnd] = useState(false);
+  const [page, setPage] = useState(data.current);
+  const [pages, setPages] = useState(data.pages);
+  const [products, setProducts] = useState<Producto[] | []>(data.rows);
   const [searchInput, setSearchInput] = useState("");
-  const [paginating, setPaginating] = useState(false);
   const [notFound, setNotFound] = useState(false);
   const [searching, setSearching] = useState(false);
   const [show, setShow] = useState(true);
 
   const nextPage = () => {
-    setFrom(from + 9);
-    setTo(to + 9);
-    setPaginating(true);
+    setPage(page + 1);
   };
 
   const previousPage = () => {
-    setFrom(from - 9);
-    setTo(to - 9);
-    setPaginating(true);
-    setProductsEnd(false);
+    setPage(page - 1);
   };
 
   const handleKeyDown = (event: any) => {
@@ -40,78 +34,23 @@ const Products: NextPage = ({ data }: any) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const searchProducts = useCallback(
     debounce(async (searchFor: string) => {
-      const { data, error } = await supabase
-        .from("producto")
-        .select()
-        .textSearch("nombre", `${searchFor}`, {
-          type: "websearch",
-          config: "english",
-        });
+      const data = await ProductService.getByNombre(searchFor, 1, 100)
 
-      if (data?.length === 0) {
-        const { data, error } = await supabase
-          .from("producto")
-          .select()
-          .textSearch("descripción", `${searchFor}`, {
-            type: "websearch",
-            config: "english",
-          });
+      if (data?.rows?.length === 0 || !data?.rows) {
+        const otherData = await ProductService.getByDescripcion(searchFor, 1, 100)
 
-        const imagenProducto = await supabase
-          .from("imagen_producto")
-          .select(`id_producto, id_imagen(enlace)`);
-
-        const mapped: any = data?.map((producto: any) => {
-          const imagenes: any = imagenProducto.data?.filter(
-            (imagen) => imagen.id_producto === producto.id
-          );
-
-          const enlaces: any = imagenes?.map(
-            (imagen: any) => imagen.id_imagen.enlace
-          );
-
-          return {
-            ...producto,
-            imagenes: enlaces,
-          };
-        });
-
-        if (mapped?.length === 0) {
-          setProducts(undefined);
+        if (otherData?.rows?.length === 0 || !otherData?.rows) {
+          setProducts(otherData?.rows);
           setNotFound(true);
-          setPaginating(false);
           setShow(false);
         } else {
-          setProducts(undefined);
-          setProducts(mapped);
+          setProducts(otherData?.rows);
           setNotFound(false);
-          setPaginating(false);
           setShow(false);
         }
       } else {
-        const imagenProducto = await supabase
-          .from("imagen_producto")
-          .select(`id_producto, id_imagen(enlace)`);
-
-        const mapped: any = data?.map((producto: any) => {
-          const imagenes: any = imagenProducto.data?.filter(
-            (imagen) => imagen.id_producto === producto.id
-          );
-
-          const enlaces: any = imagenes?.map(
-            (imagen: any) => imagen.id_imagen.enlace
-          );
-
-          return {
-            ...producto,
-            imagenes: enlaces,
-          };
-        });
-
-        setProducts(undefined);
-        setProducts(mapped);
+        setProducts(data?.rows);
         setNotFound(false);
-        setPaginating(false);
         setShow(false);
       }
     }, 1000),
@@ -119,41 +58,16 @@ const Products: NextPage = ({ data }: any) => {
   );
 
   const fetchProducts = async () => {
-    const { data, count } = await supabase
-      .from("producto")
-      .select()
-      .order("id", { ascending: true })
-      .range(from, to);
-
-    const imagenProducto = await supabase
-      .from("imagen_producto")
-      .select(`id_producto, id_imagen(enlace)`);
-
-    const mapped: any = data?.map((producto: any) => {
-      const imagenes: any = imagenProducto.data?.filter(
-        (imagen) => imagen.id_producto === producto.id
-      );
-
-      const enlaces: any = imagenes?.map(
-        (imagen: any) => imagen.id_imagen.enlace
-      );
-
-      return {
-        ...producto,
-        imagenes: enlaces,
-      };
-    });
-
-    setProducts(undefined);
-    setProducts(mapped);
-    setPaginating(true);
+    const data = await ProductService.getAll(page, 9);
+    setProducts(data.rows);
+    setPages(data.pages)
+    setPage(data.current)
     setNotFound(false);
     setSearching(false);
     setShow(true);
-    mapped?.length < 9 ? setProductsEnd(true) : null;
   };
 
-  const formatter = new Intl.NumberFormat("en-US", {
+  const formatter = new Intl.NumberFormat("es-VE", {
     style: "currency",
     currency: "USD",
   });
@@ -171,11 +85,9 @@ const Products: NextPage = ({ data }: any) => {
   }, [searchInput]);
 
   useEffect(() => {
-    if (paginating) {
       fetchProducts();
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [from, paginating, to]);
+  }, [page]);
 
   return (
     <main className={styles.products}>
@@ -199,13 +111,13 @@ const Products: NextPage = ({ data }: any) => {
       </div>
       <div className={styles["right-container"]}>
         <div className={styles.container}>
-          {products?.map((data: any) => {
+          {products?.map((data) => {
             return (
               <Product
                 title={data?.nombre}
                 price={formatter.format(data?.precio)}
-                image={data?.imagenes[0]}
-                id={data?.id}
+                image={data?.imagens?.[0]?.url || "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081"}
+                id={data?.slug}
                 key={data?.id}
               />
             );
@@ -223,10 +135,10 @@ const Products: NextPage = ({ data }: any) => {
         </div>
         {show ? (
           <div className={styles["pagination"]}>
-            <button onClick={previousPage} disabled={from === 0 && to === 8}>
+            <button onClick={previousPage} disabled={page === 1}>
               Pagina previa
             </button>
-            <button onClick={nextPage} disabled={productsEnd}>
+            <button onClick={nextPage} disabled={page === pages}>
               Pagina siguiente
             </button>
           </div>
@@ -236,35 +148,12 @@ const Products: NextPage = ({ data }: any) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  const producto = await supabase
-    .from("producto")
-    .select()
-    .order("id", { ascending: true })
-    .range(0, 8);
-
-  const imagenProducto = await supabase
-    .from("imagen_producto")
-    .select(`id_producto, id_imagen(enlace)`);
-
-  const curated: any = producto.data?.map((producto: any) => {
-    const imagenes: any = imagenProducto.data?.filter(
-      (imagen) => imagen.id_producto === producto.id
-    );
-
-    const enlaces: any = imagenes?.map(
-      (imagen: any) => imagen.id_imagen.enlace
-    );
-
-    return {
-      ...producto,
-      imagenes: enlaces,
-    };
-  });
+export const getServerSideProps: GetServerSideProps = async () => {
+  const data = await ProductService.getAll(1, 9);
 
   return {
     props: {
-      data: curated,
+      data,
     },
   };
 };
