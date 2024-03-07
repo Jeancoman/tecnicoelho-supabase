@@ -1,0 +1,29 @@
+.button {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    font-size: large;
+    font-weight: 500;
+}
+
+.left, .right {
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.left:hover img, .right:hover img {
+    filter: invert(50%) sepia(10%) saturate(6668%) hue-rotate(177deg) brightness(96%) contrast(93%);
+}
+
+.button span:first-of-type {
+    color: var(--main-color);
+    font-weight: 600;
+    margin-right: 2px;
+}
+
+.button span:last-of-type {
+    margin-left: 2px;
+}

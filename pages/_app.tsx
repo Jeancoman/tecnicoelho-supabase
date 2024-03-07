@@ -7,21 +7,15 @@ import WhatsAppButton from "../components/WhatsAppButton";
 import WhatsAppModal from "../components/WhatsAppModal";
 import { useState } from "react";
 import React from "react";
-import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
-import { SessionContextProvider } from "@supabase/auth-helpers-react";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
-  const path = new RegExp(/\/admin/, "g");
+  const path = new RegExp(/\/portal\/dashboard/, "g");
   const adminPath = path.test(router.pathname);
-  const [supabaseClient] = useState(() => createBrowserSupabaseClient());
 
   return (
-    <SessionContextProvider
-      supabaseClient={supabaseClient}
-      initialSession={pageProps.initialSession}
-    >
+    <>
       {!adminPath && (
         <>
           <Header />
@@ -35,7 +29,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Footer />
         </>
       )}
-    </SessionContextProvider>
+    </>
   );
 }
 

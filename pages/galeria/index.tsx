@@ -18,8 +18,6 @@ const Galeria: NextPage = ({ data }: any) => {
     setDescripcion(description);
   };
 
-  console.log(images);
-
   return (
     <main className={styles.main}>
       <Head>

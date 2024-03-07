@@ -1,0 +1,145 @@
+.container {
+    margin: 20px 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 50px 1fr;
+    gap: 15px;
+}
+
+.title {
+    background-color: white;
+    width: max-content;
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
+    font-size: large;
+    font-weight: 600;
+}
+
+.status {
+    color: green;
+    background-color: #ceffce;
+    padding: 10px 20px;
+    place-self: center;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: large;
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
+}
+
+.first-row {
+    display: flex;
+    gap: 10px;
+    grid-row: 1;
+}
+
+.note {
+    background-color: white;
+    width: 450px;
+    height: 210px;
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
+    padding: 15px 20px;
+    border-radius: 10px;
+}
+
+.note-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    grid-row: 2
+}
+
+.note-title {
+    font-size: large;
+    font-weight: 600;
+    width: max-content;
+}
+
+.date {
+    font-size: small;
+    place-self: end;
+}
+
+.note-title-container {
+    display: flex;
+    gap: 10px;
+}
+
+.note-body {
+    place-self: end;
+    font-style: italic;
+    margin-top: 10px;
+}
+
+.information {
+    width: 480px;
+    height: 440px;
+    grid-row: 2;
+    background-color: white;
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
+    padding: 15px 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+
+.row {
+    display: flex;
+    margin-top: 15px;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.gray-box, .green-box, .normal-box, .purple-box {
+    padding: 5px 10px;
+    border-radius: 10px;
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.gray-box p:first-of-type, .green-box p:first-of-type, .normal-box p:first-of-type, .purple-box p:first-of-type {
+    font-weight: 500;
+    text-align: center;
+}
+
+.gray-box p:last-of-type, .green-box p:last-of-type, .normal-box p:last-of-type, .purple-box p:last-of-type {
+    font-weight: 700;
+    text-align: center;
+}
+
+.gray-box {
+    background-color: rgb(226,226,226)
+}
+
+.gray-box:hover {
+    background-color: rgb(218,218,218)
+}
+
+.green-box {
+    color: green;
+    background-color: #ceffce;
+}
+
+.green-box:hover {
+    background-color: #baffba;
+}
+
+.purple-box {
+    color: #552baa;
+    background-color: #dacef3;
+}
+
+.purple-box:hover {
+    background-color: #cebeef;
+}
+
+.normal-box {
+    border: 1px solid rgb(180,180,180);
+    box-shadow: none;
+}
+
+.normal-box:hover {
+    background-color: rgb(250,250,250);
+}

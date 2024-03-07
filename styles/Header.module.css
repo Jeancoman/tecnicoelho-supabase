@@ -2,7 +2,7 @@
   display: grid;
   place-content: center;
   grid-template-columns: 300px 3.5fr;
-  padding: 25px 10px;
+  padding: 20px 10px;
   border-bottom: 1px solid rgb(210, 210, 210);
   position: sticky;
   top: 0;
@@ -150,7 +150,7 @@
 
 
 .container img {
-  height: 80px;
+  height: 60px;
   width: 300px
 }
 

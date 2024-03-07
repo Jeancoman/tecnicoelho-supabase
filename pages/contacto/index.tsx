@@ -69,8 +69,8 @@ const Contact: NextPage = () => {
           <div className={styles.left}>
             <h3>Ubicanos en</h3>
             <div className={styles.text}>
-              <p>Calle Descanso</p>
-              <p>Calle Retumbo</p>
+              <p>Entre la Calle Descanso</p>
+              <p> y la Calle Retumbo</p>
               <p>Valle de la Pascua</p>
               <p>2350</p>
               <p>Guárico, Venezuela</p>

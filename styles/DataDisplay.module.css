@@ -1,0 +1,161 @@
+.container {
+  margin: 20px 50px;
+  height: 93%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.back img {
+  height: 20px;
+}
+
+.back {
+  background-color: white;
+  width: max-content;
+  padding: 0px 12px;
+  border-radius: 5px;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+  display: flex;
+  place-items: center;
+}
+
+.back span {
+  font-weight: 500;
+}
+
+.back span:first-of-type {
+  cursor: pointer
+}
+
+.back span:first-of-type:hover {
+  color: var(--main-color)
+}
+
+.second-cursor {
+  cursor: pointer
+}
+
+.second-cursor:hover {
+  color: var(--main-color)
+}
+
+.back span:last-of-type {
+  color: var(--main-color)
+}
+
+.back-two {
+  background-color: white;
+  width: max-content;
+  padding: 0px 12px;
+  border-radius: 5px;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+  display: flex;
+  place-items: center;
+}
+
+.back-two span {
+  font-weight: 500;
+  color: var(--main-color)
+}
+
+.first-row {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.first-row input[type="text"] {
+  appearance: none;
+  border-radius: 5px;
+  border: 1px solid rgb(180, 180, 180);
+  outline-color: var(--main-color);
+  outline-width: 0.5px;
+  padding: 10px;
+  width: 250px;
+  height: 35px;
+}
+
+.data-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.title-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 0px 10px;
+  margin-bottom: 20px;
+  justify-items: start;
+}
+
+.title-row p {
+  border-bottom: 2px solid var(--main-color);
+  width: max-content;
+  font-weight: 600;
+}
+
+
+.data-container table {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
+  padding: 10px
+}
+
+.data-container th {
+  text-align: start;
+}
+
+.button-cell button {
+  display: flex;
+  background-color: white;
+  border: 1px solid var(--main-color);
+  border-radius: 10px;
+  padding: 4px 10px;
+  color: var(--main-color);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button-cell button:hover {
+  background-color: #e8f4fd
+}
+
+.last-row {
+  position: absolute;
+  bottom: 0px
+}
+
+.modal {
+  position: fixed;
+  top: 15%;
+  left: 22%;
+  width: 800px;
+  height: 500px;
+  border: none;
+  border-radius: 5px;
+  padding: 20px 30px;
+}
+
+.modal-first-row {
+  display: flex;
+  gap: 5px;
+}
+
+.modal-first-row div {
+  color: green;
+  background-color: #ceffce;
+  padding: 5px 10px;
+  place-self: center;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: small
+}
+
+.information {
+  margin-top: 10px;
+}
