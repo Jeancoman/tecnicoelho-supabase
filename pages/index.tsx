@@ -8,6 +8,7 @@ import styles from "../styles/Home.module.css";
 import { Producto, Publicación } from "../types";
 import ProductService from "../utilities/productService";
 import PublicationService from "../utilities/publicationService";
+import { useRouter } from "next/router";
 
 const Home: NextPage = ({ data, posts }: any) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -21,6 +22,7 @@ const Home: NextPage = ({ data, posts }: any) => {
   const [publications] = useState<Publicación[]>(
     posts?.rows?.filter((p: any) => p.esPública === true) || []
   );
+  const router = useRouter();
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -143,6 +145,14 @@ const Home: NextPage = ({ data, posts }: any) => {
           </div>
         </div>
       </section>
+      <section className={styles["call-to-action"]}>
+        <div>
+          <div>¿Quieres agendar un servicio con nosotros?</div>
+          <button onClick={() => {
+            router.push("/portal/inicio#nuevo")
+          }}>Haz click aquí</button>
+        </div>
+      </section>
       {products.length > 0 ? (
         <section className={styles.information}>
           <h2 className={styles["information-header"]}>Productos recientes</h2>
@@ -238,8 +248,8 @@ const Home: NextPage = ({ data, posts }: any) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const producto = await ProductService.getNew(1, 100);
-  const posts = await PublicationService.getNew(1, 100);
+  const producto = await ProductService.getAll(1, 15);
+  const posts = await PublicationService.getAll(1, 15);
 
   return {
     props: {

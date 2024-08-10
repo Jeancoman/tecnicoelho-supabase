@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styles from "../styles/BlogFeed.module.css";
 
-const BlogFeed = ({ fecha, imagen, contenido, titulo, id }: any) => {
+const BlogFeed = ({ fecha, imagen, titulo, id }: any) => {
   return (
     <div className={styles.container}>
       <div>

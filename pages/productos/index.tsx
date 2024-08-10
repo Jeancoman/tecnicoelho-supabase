@@ -40,7 +40,7 @@ const Products: NextPage = ({ data }: any) => {
         const otherData = await ProductService.getByDescripcion(searchFor, 1, 100)
 
         if (otherData?.rows?.length === 0 || !otherData?.rows) {
-          setProducts(otherData?.rows);
+          setProducts(otherData?.rows || []);
           setNotFound(true);
           setShow(false);
         } else {
@@ -59,9 +59,9 @@ const Products: NextPage = ({ data }: any) => {
 
   const fetchProducts = async () => {
     const data = await ProductService.getAll(page, 9);
-    setProducts(data.rows);
-    setPages(data.pages)
-    setPage(data.current)
+    setProducts(data?.rows || []);
+    setPages(data?.pages)
+    setPage(data?.current)
     setNotFound(false);
     setSearching(false);
     setShow(true);
@@ -107,6 +107,7 @@ const Products: NextPage = ({ data }: any) => {
             setSearching(true);
           }}
           onKeyDown={handleKeyDown}
+          disabled={true}
         />
       </div>
       <div className={styles["right-container"]}>

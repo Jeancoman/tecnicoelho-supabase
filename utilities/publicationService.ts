@@ -1,26 +1,26 @@
-import { Publicación } from "../types";
+import { Publicación, Response } from "../types";
 
 export default class PublicationService {
   static async getAll(page: number, size: number) {
     try {
       const response = await fetch(
         `${process.env
-          .NEXT_PUBLIC_API_URL!}/api/publicaciones?page=${page}&size=${size}`
+          .NEXT_PUBLIC_API_URL!}/api/publicaciones/anonimo?page=${page}&size=${size}`
       );
 
       if (response.status > 300) {
-        return false;
+        return null;
       }
 
-      const data = (await response.json()) as any;
+      const data = (await response.json()) as Response;
 
       if (data.rows.length === 0) {
-        return false;
+        return null;
       }
 
       return data;
     } catch {
-      return false;
+      return null;
     }
   }
 
@@ -28,18 +28,18 @@ export default class PublicationService {
     try {
       const response = await fetch(
         `${process.env
-          .NEXT_PUBLIC_API_URL!}/api/publicaciones/${slug}?mode=SLUG`
+          .NEXT_PUBLIC_API_URL!}/api/publicaciones/${slug}/anonimo?mode=SLUG`
       );
 
       if (response.status > 300) {
-        return false;
+        return null;
       }
 
       const data = (await response.json()) as Publicación;
 
       return data;
     } catch {
-      return false;
+      return null;
     }
   }
 
@@ -51,18 +51,18 @@ export default class PublicationService {
       );
 
       if (response.status > 300) {
-        return false;
+        return null;
       }
 
-      const data = (await response.json()) as any;
+      const data = (await response.json()) as Response;
 
       if (data.rows.length === 0) {
-        return false;
+        return null;
       }
 
       return data;
     } catch {
-      return false;
+      return null;
     }
   }
 }

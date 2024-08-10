@@ -1,0 +1,65 @@
+.container {
+    display: flex;
+    gap: 10px;
+    border: 1px solid rgb(150, 150, 150);
+    border-radius: 10px;
+    padding: 10px 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .container:hover {
+    background-color: rgb(251, 251, 251);
+  }
+  
+  .date {
+    font-size: small;
+    place-self: end;
+  }
+  
+  .id {
+    place-self: center;
+    font-weight: 600;
+  }
+  
+  .status {
+    color: green;
+    background-color: #ceffce;
+    padding: 5px 10px;
+    place-self: center;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: small;
+  }
+  
+  .status-red {
+    color: white;
+    background-color: rgb(218, 107, 107);
+    padding: 5px 10px;
+    place-self: center;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: small;
+  }
+  
+  .status-gray {
+    color: white;
+    background-color: gray;
+    padding: 5px 10px;
+    place-self: center;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: small;
+  }
+  
+  @media (max-width: 1100px) {
+    .container {
+      width: 220px;
+      padding: 10px 15px;
+    }
+  
+    .id {
+      font-size: small
+    }
+  
+  }

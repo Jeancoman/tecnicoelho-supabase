@@ -2,9 +2,11 @@ import Link from "next/link";
 import { useState } from "react";
 import styles from "../styles/Header.module.css";
 import cn from "classnames";
+import { useRouter } from "next/router";
 
 const Header = () => {
   const [display, setDisplay] = useState(false);
+  const router = useRouter();
 
   const toggle = () => {
     setDisplay(false);
@@ -13,7 +15,9 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles["logo-menu"]}>
-        <picture className={styles.container}>
+        <picture className={styles.container} onClick={() => {
+          router.push("/")
+        }}>
           <source srcSet="/Logo-TecniCoelho-sin-eslogan.png" type="image/png" />
           <img
             src="/Logo-TecniCoelho-sin-eslogan.png"
@@ -32,11 +36,6 @@ const Header = () => {
         })}
       >
         <ul className={styles.ul}>
-          <Link href={"/"}>
-            <li className={styles.li} onClick={toggle}>
-              <a className={styles.a}>Inicio</a>
-            </li>
-          </Link>
           <Link href={"/productos"}>
             <li className={styles.li} onClick={toggle}>
               <a className={styles.a}>Productos</a>
@@ -60,6 +59,11 @@ const Header = () => {
           <Link href={"/contacto"}>
             <li className={styles.li} onClick={toggle}>
               <a className={styles.a}>Contacto</a>
+            </li>
+          </Link>
+          <Link href={"/portal/inicio"}>
+            <li className={styles.li } onClick={toggle}>
+              <a className={styles.a}>Portal</a>
             </li>
           </Link>
         </ul>

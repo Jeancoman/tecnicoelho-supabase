@@ -4,6 +4,7 @@
     align-items: center;
     font-size: large;
     font-weight: 500;
+    user-select: none
 }
 
 .left, .right {
