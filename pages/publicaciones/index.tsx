@@ -36,6 +36,7 @@ const Blog: NextPage = ({ data }: any) => {
 
   useEffect(() => {
     areMorePost();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page])
 
   return (
@@ -48,7 +49,7 @@ const Blog: NextPage = ({ data }: any) => {
         return (
           <BlogFeed
             fecha={doc.creada}
-            imagen={doc.imagen?.url || "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081"}
+            imagen={doc.portada || "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081"}
             titulo={doc.título}
             key={doc.id}
             id={doc.slug}

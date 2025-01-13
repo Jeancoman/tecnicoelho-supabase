@@ -14,6 +14,7 @@
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
   font-size: large;
   font-weight: 600;
+  vertical-align: middle;
 }
 
 .status {
@@ -256,4 +257,73 @@
   .information {
     grid-row: 4;
   }
+}
+
+@media (max-width: 510px) {
+  .note {
+    width: 200px;
+  }
+
+  .information {
+    width: 300px;
+  }
+
+  .container {
+    grid-template-rows: auto auto auto;
+  }
+
+  .second-row {
+    grid-row: 2;
+  }
+
+  .information {
+    grid-row: 3;
+  }
+
+}
+
+@media (max-width: 390px) {
+  .note {
+    width: 180px;
+  }
+
+  .information {
+    width: full;
+  }
+}
+
+@media (max-width: 300px) {
+  .note {
+    width: 150px;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+}
+
+.description-section {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+}
+
+.description-section h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.description-content {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+  white-space: pre-wrap; /* Para mantener los saltos de línea */
+  word-wrap: break-word;
+}
+
+.message-section {
+  grid-column: 1;
 }

@@ -249,7 +249,7 @@ const ProblemaDataDisplay = () => {
     <div className={styles.container}>
       <div className={styles["first-row"]}>
         <div className={styles.back}>
-          <span>TID-{router.query.id || ""}</span>{" "}
+          <span>ID-{router.query.id || ""}</span>{" "}
           <img src="/chevron_right.svg" /> <span>Problemas</span>
         </div>
         <div>

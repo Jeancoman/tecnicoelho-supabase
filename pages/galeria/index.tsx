@@ -58,6 +58,7 @@ const Dialog = ({ show, setShow, src, descripcion }: any) => {
     if (event.key === "Escape") {
       setShow(!show);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const outsideClick = (event: MouseEvent) => {
@@ -87,6 +88,7 @@ const Dialog = ({ show, setShow, src, descripcion }: any) => {
     return () => {
       document.removeEventListener("keydown", escFunction, false);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -95,6 +97,7 @@ const Dialog = ({ show, setShow, src, descripcion }: any) => {
     return () => {
       document.removeEventListener("click", outsideClick, true);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

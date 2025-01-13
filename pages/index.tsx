@@ -8,7 +8,6 @@ import styles from "../styles/Home.module.css";
 import { Producto, Publicación } from "../types";
 import ProductService from "../utilities/productService";
 import PublicationService from "../utilities/publicationService";
-import { useRouter } from "next/router";
 
 const Home: NextPage = ({ data, posts }: any) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -22,7 +21,6 @@ const Home: NextPage = ({ data, posts }: any) => {
   const [publications] = useState<Publicación[]>(
     posts?.rows?.filter((p: any) => p.esPública === true) || []
   );
-  const router = useRouter();
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -145,14 +143,6 @@ const Home: NextPage = ({ data, posts }: any) => {
           </div>
         </div>
       </section>
-      <section className={styles["call-to-action"]}>
-        <div>
-          <div>¿Quieres agendar un servicio con nosotros?</div>
-          <button onClick={() => {
-            router.push("/portal/inicio#nuevo")
-          }}>Haz click aquí</button>
-        </div>
-      </section>
       {products.length > 0 ? (
         <section className={styles.information}>
           <h2 className={styles["information-header"]}>Productos recientes</h2>
@@ -166,7 +156,7 @@ const Home: NextPage = ({ data, posts }: any) => {
                       <div className={styles["embla__slide"]} key={data?.id}>
                         <Product
                           title={data?.nombre}
-                          price={formatter.format(data?.precio)}
+                          price={formatter.format(data?.precioVenta)}
                           image={
                             data?.imagens?.[0]?.url ||
                             "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081"
@@ -212,7 +202,7 @@ const Home: NextPage = ({ data, posts }: any) => {
                           titulo={post?.título}
                           fecha={String(post?.creada).slice(0, 10)}
                           imagen={
-                            post?.imagen?.url ||
+                            post?.portada ||
                             "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081"
                           }
                           id={post?.slug}

@@ -116,7 +116,7 @@ const Products: NextPage = ({ data }: any) => {
             return (
               <Product
                 title={data?.nombre}
-                price={formatter.format(data?.precio)}
+                price={formatter.format(data?.precioVenta)}
                 image={data?.imagens?.[0]?.url || "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081"}
                 id={data?.slug}
                 key={data?.id}

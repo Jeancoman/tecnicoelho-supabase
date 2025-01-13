@@ -18,9 +18,9 @@ const Post: NextPage = ({ data }: any) => {
       <div className={styles.container}>
         <div>
           <picture>
-            <source srcSet={post.imagen?.url || "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081"} />
+            <source srcSet={post?.portada || "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081"} />
             <img
-              src={post.imagen?.url || "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081"}
+              src={post?.portada  || "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081"}
               alt="Perfil"
               referrerPolicy="no-referrer"
             />

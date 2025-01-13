@@ -6,7 +6,7 @@ const TicketElement = (ticket: Ticket) => {
   return (
     <Link href={"/portal/dashboard/tickets/" + ticket.id}>
       <div className={styles.container}>
-        <div className={styles.id}>TID-{ticket.id}</div>
+        <div className={styles.id}>ID-{ticket.id}</div>
         {ticket.estado === "ABIERTO" ? (
           <div className={styles.status}>Abierto</div>
         ) : ticket.estado === "CERRADO" ? (
@@ -14,7 +14,7 @@ const TicketElement = (ticket: Ticket) => {
         ) : (
           <div className={styles["status-gray"]}>Esperando...</div>
         )}
-        <div className={styles.date}>{ticket.creado?.slice(0, 10)}</div>
+        <div className={styles.date}>{(ticket.creado as any).slice(0, 10)}</div>
       </div>
     </Link>
   );

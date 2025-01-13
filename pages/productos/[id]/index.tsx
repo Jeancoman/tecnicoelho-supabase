@@ -2,7 +2,6 @@ import type { GetServerSideProps, NextPage } from "next";
 import { useState } from "react";
 import styles from "/styles/ProductPage.module.css";
 import markdown from "/styles/Markdown.module.css";
-import toast, { Toaster } from "react-hot-toast";
 import Modal from "../../../components/Modal";
 import Head from "next/head";
 import ProductService from "../../../utilities/productService";
@@ -11,7 +10,7 @@ import { Producto } from "../../../types";
 const ProductPage: NextPage = ({ data }: any) => {
   const [product] = useState<Producto>(data)
   const [actualImage, setActualImage] = useState<string>(product?.imagens?.[0]?.url || "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081");
-  const [images, setImages] = useState<string[]>(product?.imagens?.map((img) => img.url) || []);
+  const [images] = useState<string[]>(product?.imagens?.map((img) => img.url) || []);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -75,7 +74,6 @@ const ProductPage: NextPage = ({ data }: any) => {
           </div>
         </div>
       <Modal show={show} handleClose={handleClose} producto={data?.nombre} />
-      <Toaster />
     </main>
   );
 };

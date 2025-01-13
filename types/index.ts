@@ -4,8 +4,10 @@ export interface Producto {
   slug: string;
   nombre: string;
   descripción?: string;
-  precio: number;
-  stock: number;
+  precioCompra: number;
+  precioVenta: number;
+  exento: boolean;
+  existencias: number;
   esPúblico: boolean;
   categoría_id?: number;
   categoría?: Categoría;
@@ -16,12 +18,13 @@ export interface Publicación {
   id?: number;
   slug: string;
   título: string;
+  portada: string;
+  descripcionPortada: string;
   contenido: string;
   esPública: boolean;
-  readonly creada?: string;
-  modificada?: string;
-  imagen?: Imagen;
-  imagen_id?: number;
+  autor?: string;
+  readonly creada?: Date;
+  modificada?: Date;
   usuario_id?: number;
   usuario?: Usuario;
 }
@@ -61,70 +64,20 @@ export interface Cliente {
   contraseña?: string;
 }
 
-export interface Elemento {
-  id?: number;
-  nombre: string;
-  descripción: string;
-  estado?: "ACTIVO" | "INACTIVO";
-  readonly registrado?: string; 
-  cliente_id?: number;
-  categoría_id: number;
-  categoría?: Categoría;
-  cliente?: Cliente;
-}
-
 export interface Ticket {
   id?: number;
+  asunto: string;
+  prioridad: "BAJA" | "MEDIA" | "ALTA";
   estado: "ABIERTO" | "CERRADO";
-  readonly creado?: string;
-  cerrado?: string;
-  notas_de_apertura?: String;
-  notas_de_cierre?: String;
-  elemento_id?: number;
-  elemento?: Elemento;
-}
-
-export interface Problema {
-  id?: number;
-  nombre: string;
   descripción?: string;
-  causa?: string;
-  solución?: string;
-  prioridad?: "BAJA" | "MEDIA" | "ALTA";
-  estado?: "PENDIENTE" | "RESUELTO";
-  readonly detectado?: string;  
-  resuelto?: string;  
-  ticket_id?: number;
-}
-
-export interface Servicio {
-  id?: number;
-  nombre: string;
-  descripción?: string;
-  tipo?: "DOMICILIO" | "TIENDA" | "REMOTO";
-  estado?:  "PENDIENTE" | "INICIADO" | "COMPLETADO";
-  readonly añadido?: string;
-  iniciado?: string;
-  completado?: string;
-  necesidades?: string;
-  notas?: string;
-  resultado?: string;
-  ticket_id?:number;
+  tipo: "DOMICILIO" | "TIENDA" | "REMOTO";
+  readonly creado?: Date;
+  readonly cerrado?: Date;
+  cliente_id?: number;
+  cliente?: Cliente;
   categoría_id?: number;
-}
+  categoría?: Categoría;
 
-export interface Operación {
-  id?: number;
-  nombre: string;
-  descripción?: string;
-  estado?:  "PENDIENTE" | "INICIADA" | "COMPLETADA";
-  readonly añadida?: string;
-  iniciada?: string;
-  completada?: string;
-  necesidades?: string;
-  notas?: string;
-  resultado?: string;
-  servicio_id?:number;
 }
 
 export interface Mensaje {
@@ -133,7 +86,7 @@ export interface Mensaje {
   estado?: "ENVIADO" | "NO_ENVIADO";
   readonly creado?: string;
   modificado?: string;
-  ticket_id?: number;
+  servicio_id?: number;
 }
 
 export type Response = {
@@ -146,12 +99,8 @@ export type Response = {
 export type ModalProps = {
   isOpen: boolean;
   closeModal: () => void;
-  elemento?: Elemento;
   ticket?: Ticket;
-  problema?: Problema;
   mensaje?: Mensaje;
-  servicio?: Servicio;
-  operación?: Operación;
 };
 
 export interface JwtPayload {
