@@ -71,8 +71,8 @@ export interface Ticket {
   estado: "ABIERTO" | "CERRADO";
   descripción?: string;
   tipo: "DOMICILIO" | "TIENDA" | "REMOTO";
-  readonly creado?: Date;
-  readonly cerrado?: Date;
+  readonly creado?: string;
+  readonly cerrado?: string;
   cliente_id?: number;
   cliente?: Cliente;
   categoría_id?: number;
