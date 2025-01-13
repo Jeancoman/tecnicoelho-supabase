@@ -1,7 +1,6 @@
 import type { GetServerSideProps, NextPage } from "next";
 import { useState } from "react";
 import styles from "/styles/ProductPage.module.css";
-import markdown from "/styles/Markdown.module.css";
 import Modal from "../../../components/Modal";
 import Head from "next/head";
 import ProductService from "../../../utilities/productService";
@@ -57,7 +56,7 @@ const ProductPage: NextPage = ({ data }: any) => {
           <div className={styles["product-info"]}>
             <h3>{data?.nombre}</h3>
             <div className={styles.price}>
-              Precio unitario de <span>{formatter.format(data?.precio)}</span>
+              Precio unitario de <span>{formatter.format(data?.precioVenta)}</span>
             </div>
             <button className={styles.button} onClick={handleShow}>
               contáctanos 
@@ -70,7 +69,9 @@ const ProductPage: NextPage = ({ data }: any) => {
           </div>
           <hr />
           <div className={styles["descom-container"]}>
-            <div className={markdown["markdown-body"]} dangerouslySetInnerHTML={{__html: data?.descripción}} />
+            <div className={styles.nose}>
+              {data?.descripción}
+            </div>
           </div>
         </div>
       <Modal show={show} handleClose={handleClose} producto={data?.nombre} />

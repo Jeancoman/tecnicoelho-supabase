@@ -163,6 +163,11 @@
     gap: 20px;
 }
 
+.nose {
+    white-space: pre-wrap !important;
+    overflow-wrap: break-word !important;
+}
+
 @media (max-width: 800px){
     .container {
         grid-template-columns: none;
